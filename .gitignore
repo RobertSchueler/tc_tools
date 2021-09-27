@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+test.py
+.idea/
+example.png
+src/01-08_Lillim.png
+src/01-Lillim-Soldatin.png
