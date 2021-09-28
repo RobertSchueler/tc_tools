@@ -23,15 +23,6 @@ class Variable:
     val: int or str,
         either the corresponding constant or the name of the corresponding attribute
 
-    Properties
-    ----------
-
-    field : str,
-        the name of the corresponding attribute or None if corresponding to a constant
-
-    val : int,
-        the corresponding constant, or None if the object corresponds to an attribute
-
     """
     def __init__(self, val):
         if isinstance(val, int):
@@ -45,10 +36,16 @@ class Variable:
 
     @property
     def val(self):
+        """
+        the corresponding constant, or None if the object corresponds to an attribute
+        """
         return self._val
 
     @property
     def field(self):
+        """
+        the name of the corresponding attribute or None if corresponding to a constant
+        """
         return self._field
 
     @val.setter
