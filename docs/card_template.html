@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>tc_tools API documentation</title>
-<meta name="description" content="" />
+<title>tc_tools.card_template API documentation</title>
+<meta name="description" content="Contains functions to create and handle card templates." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,32 +19,122 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>tc_tools</code></h1>
+<h1 class="title">Module <code>tc_tools.card_template</code></h1>
 </header>
 <section id="section-intro">
+<p>Contains functions to create and handle card templates.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Contains functions to create and handle card templates.
+&#34;&#34;&#34;
+
+import tc_tools.constants as const
+
+
+class CardTemplate:
+    &#34;&#34;&#34;
+    A card template contains all information how to render a card.
+
+    Parameter
+    ----------
+
+    fmt: str or (int, int),
+        either the name of a format supported by the constants submodule or a tuple of the width and height as integers
+        in the unit defined by unit.
+        Defaults to &#34;poker&#34;.
+
+    dpi: int,
+        The resolution of the card.
+        Defaults to 300.
+
+    unit: str,
+        The name of the unit in which the format is given.
+        Supported strings are:
+
+        -in
+
+    &#34;&#34;&#34;
+    def __init__(self, fmt: str or (int, int) = &#34;poker&#34;, dpi: int = 300, unit: str = &#34;in&#34;):
+
+        if isinstance(fmt, str):
+            self._fmt = const.format_dict[fmt]
+        else:
+            self._fmt = fmt
+
+        self._dpi = dpi
+        self._shape = (self._fmt[0]*self._dpi, self._fmt[1]*self._dpi)</code></pre>
+</details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt><code class="name"><a title="tc_tools.card_template" href="card_template.html">tc_tools.card_template</a></code></dt>
+<dt id="tc_tools.card_template.CardTemplate"><code class="flex name class">
+<span>class <span class="ident">CardTemplate</span></span>
+<span>(</span><span>fmt: str = 'poker', dpi: int = 300, unit: str = 'in')</span>
+</code></dt>
 <dd>
-<div class="desc"><p>Contains functions to create and handle card templates.</p></div>
-</dd>
-<dt><code class="name"><a title="tc_tools.constants" href="constants.html">tc_tools.constants</a></code></dt>
-<dd>
-<div class="desc"><p>Contains common constants in the context of TCG …</p></div>
-</dd>
-<dt><code class="name"><a title="tc_tools.data" href="data.html">tc_tools.data</a></code></dt>
-<dd>
-<div class="desc"><p>Module containing everything to handle data processing.</p></div>
+<div class="desc"><p>A card template contains all information how to render a card.</p>
+<h2 id="parameter">Parameter</h2>
+<p>fmt: str or (int, int),
+either the name of a format supported by the constants submodule or a tuple of the width and height as integers
+in the unit defined by unit.
+Defaults to "poker".</p>
+<p>dpi: int,
+The resolution of the card.
+Defaults to 300.</p>
+<p>unit: str,
+The name of the unit in which the format is given.
+Supported strings are:</p>
+<pre><code>-in
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CardTemplate:
+    &#34;&#34;&#34;
+    A card template contains all information how to render a card.
+
+    Parameter
+    ----------
+
+    fmt: str or (int, int),
+        either the name of a format supported by the constants submodule or a tuple of the width and height as integers
+        in the unit defined by unit.
+        Defaults to &#34;poker&#34;.
+
+    dpi: int,
+        The resolution of the card.
+        Defaults to 300.
+
+    unit: str,
+        The name of the unit in which the format is given.
+        Supported strings are:
+
+        -in
+
+    &#34;&#34;&#34;
+    def __init__(self, fmt: str or (int, int) = &#34;poker&#34;, dpi: int = 300, unit: str = &#34;in&#34;):
+
+        if isinstance(fmt, str):
+            self._fmt = const.format_dict[fmt]
+        else:
+            self._fmt = fmt
+
+        self._dpi = dpi
+        self._shape = (self._fmt[0]*self._dpi, self._fmt[1]*self._dpi)</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
 </section>
 </article>
 <nav id="sidebar">
@@ -53,11 +143,16 @@
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="tc_tools.card_template" href="card_template.html">tc_tools.card_template</a></code></li>
-<li><code><a title="tc_tools.constants" href="constants.html">tc_tools.constants</a></code></li>
-<li><code><a title="tc_tools.data" href="data.html">tc_tools.data</a></code></li>
+<li><code><a title="tc_tools" href="index.html">tc_tools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tc_tools.card_template.CardTemplate" href="#tc_tools.card_template.CardTemplate">CardTemplate</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>
