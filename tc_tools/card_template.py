@@ -27,6 +27,8 @@ class CardTemplate:
 
         -in
 
+        Defaults to "in".
+
     """
     def __init__(self, fmt: str or (int, int) = "poker", dpi: int = 300, unit: str = "in"):
 
