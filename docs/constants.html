@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>tc_tools API documentation</title>
-<meta name="description" content="" />
+<title>tc_tools.constants API documentation</title>
+<meta name="description" content="Contains common constants in the context of TCG …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,22 +19,78 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>tc_tools</code></h1>
+<h1 class="title">Module <code>tc_tools.constants</code></h1>
 </header>
 <section id="section-intro">
+<p>Contains common constants in the context of TCG.</p>
+<p>Supported card formats are</p>
+<ul>
+<li>poker</li>
+<li>bridge</li>
+<li>business</li>
+<li>mini</li>
+<li>small</li>
+<li>large</li>
+<li>jumbo</li>
+<li>tarot</li>
+<li>domino</li>
+<li>index small</li>
+<li>index</li>
+<li>index large</li>
+<li>index giant</li>
+<li>square small</li>
+<li>square</li>
+<li>square large</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Contains common constants in the context of TCG.
+
+Supported card formats are
+
+- poker
+- bridge
+- business
+- mini
+- small
+- large
+- jumbo
+- tarot
+- domino
+- index small
+- index
+- index large
+- index giant
+- square small
+- square
+- square large
+&#34;&#34;&#34;
+
+#card format constants in inch
+format_dict = {
+    &#34;poker&#34;:        (2.5, 3.5),
+    &#34;bridge&#34;:       (2.25, 3.5),
+    &#34;business&#34;:     (3.5, 2),
+    &#34;mini&#34;:         (1.75, 2.5),
+    &#34;small&#34;:        (3, 2),
+    &#34;large&#34;:        (3.5, 5),
+    &#34;jumbo&#34;:        (3.5, 5.5),
+    &#34;tarot&#34;:        (2.75, 4.75),
+    &#34;domino&#34;:       (1.75, 3.5),
+    &#34;index small&#34;:  (3, 4.5),
+    &#34;index&#34;:        (3, 5),
+    &#34;index large&#34;:  (3, 5.5),
+    &#34;index giant&#34;:  (4.75, 7),
+    &#34;square small&#34;: (3, 3),
+    &#34;square&#34;:       (3.5, 3.5),
+    &#34;square large&#34;: (4.75, 4.75)
+}</code></pre>
+</details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
-<dl>
-<dt><code class="name"><a title="tc_tools.constants" href="constants.html">tc_tools.constants</a></code></dt>
-<dd>
-<div class="desc"><p>Contains common constants in the context of TCG …</p></div>
-</dd>
-<dt><code class="name"><a title="tc_tools.data" href="data.html">tc_tools.data</a></code></dt>
-<dd>
-<div class="desc"><p>Module containing everything to handle data processing.</p></div>
-</dd>
-</dl>
 </section>
 <section>
 </section>
@@ -49,10 +105,9 @@
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="tc_tools.constants" href="constants.html">tc_tools.constants</a></code></li>
-<li><code><a title="tc_tools.data" href="data.html">tc_tools.data</a></code></li>
+<li><code><a title="tc_tools" href="index.html">tc_tools</a></code></li>
 </ul>
 </li>
 </ul>
