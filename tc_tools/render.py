@@ -1,7 +1,8 @@
 from html2image import Html2Image
 from jinja2 import Environment, FileSystemLoader
+
 env = Environment(loader=FileSystemLoader(searchpath="./templates"))
-hti = Html2Image()
+_hti = Html2Image()
 
 
 def _box_id_iter():
@@ -30,18 +31,18 @@ def box(left, top, width, height, content="", **css_args):
     css_args["top"] = top
     css_args["width"] = width
     css_args["height"] = height
-    id = next(_box_id)
+    box_id = next(_box_id)
 
-    _box_html_list.append(_box_html_template.render(content=content, id=id))
-    _box_css_list.append(_box_css_template.render(css_args=css_args, id=id))
+    _box_html_list.append(_box_html_template.render(content=content, id=box_id))
+    _box_css_list.append(_box_css_template.render(css_args=css_args, id=box_id))
 
 
 def image(path, left, top, width, height, **css_args):
     """
     """
-    hti.load_file(path)
+    _hti.load_file(path)
     content = _img_html_template.render(path=path, width=width, height=height)
-    box(content, left, top, width, height, **css_args)
+    box(left, top, width, height, content, **css_args)
 
 
 def render(path, render_fun, source, *args, **kwargs):
@@ -63,17 +64,17 @@ def render(path, render_fun, source, *args, **kwargs):
     global _box_html_list
     global _box_css_list
     global _box_id
+    global _hti
 
     for i, data in enumerate(source):
-        _box_html_list, _box_css_list, _box_id = [], [], _box_id_iter()
+        _box_html_list, _box_css_list, _box_id, _hti = [], [], _box_id_iter(), Html2Image(output_path=path)
         render_fun(data, *args, **kwargs)
-        content = _card_html_template.render(boxes=_box_html_list)
+        content = _card_html_template.render(boxes=_box_html_list, id="main")
         html_str = _index_html_template.render(content=content)
         css_str = _card_css_template.render(boxes=_box_css_list)
 
-        hti.screenshot(
+        _hti.screenshot(
             html_str=html_str,
             css_str=css_str,
-            #output_path=f"{path}",
             save_as=f"out{i}.jpg"
         )
