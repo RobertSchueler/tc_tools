@@ -2,7 +2,7 @@
 Contains functions to create and handle card templates.
 """
 
-import tc_tools.constants as const
+from tc_tools import FORMATS
 
 
 class CardTemplate:
@@ -31,10 +31,11 @@ class CardTemplate:
 
     """
     def __init__(self, fmt: str or (int, int) = "poker", dpi: int = 300, unit: str = "in"):
-
-        if isinstance(fmt, str):
-            self._fmt = const.format_dict[fmt]
-        else:
+        
+        # better to ask for forgiveness then for permission
+        try:
+            self._fmt = FORMATS[fmt]
+        except KeyError:
             self._fmt = fmt
 
         self._dpi = dpi

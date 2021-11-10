@@ -22,7 +22,7 @@ Supported card formats are
 """
 
 #card format constants in inch
-format_dict = {
+FORMATS = {
     "poker":        (2.5, 3.5),
     "bridge":       (2.25, 3.5),
     "business":     (3.5, 2),
