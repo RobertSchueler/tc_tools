@@ -1,0 +1,7 @@
+{% autoescape false %}
+
+    {% for box in boxes %}
+        {{ box }}
+    {% endfor %}
+
+{% endautoescape %}

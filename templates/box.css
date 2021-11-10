@@ -1,0 +1,8 @@
+{% autoescape false %}
+#{{ id }} {
+    position: absolute;
+    {% for key, value in css_args.items() %}
+        {{ key }}: {{ value }};
+    {% endfor %}
+}
+{% endautoescape %}

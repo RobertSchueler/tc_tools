@@ -134,8 +134,9 @@ src/01-08_Lillim.png
 src/01-Lillim-Soldatin.png
 test.png
 test.css
-test.html
+templates/templatev01.html
 example.jpg
 example_blurred.jpg
 out_example.jpg
 screenshot.png
+*.jpg

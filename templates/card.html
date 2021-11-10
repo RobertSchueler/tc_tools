@@ -1,0 +1,7 @@
+{% autoescape false %}
+<div class="card" id={{ id }}>
+    {% for box in boxes %}
+        {{ box }}
+    {% endfor %}
+</div>
+{% endautoescape %}

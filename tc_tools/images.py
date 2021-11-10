@@ -23,3 +23,10 @@ def array_map(fun):
         return outfile
 
     return inner_fun
+
+
+def array_pixel_map(fun):
+    """
+    """
+    def inner_fun(infile, outfile=None):
+        path
