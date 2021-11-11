@@ -1,6 +1,8 @@
 from html2image import Html2Image
 from jinja2 import Environment, FileSystemLoader
 
+from tc_tools import FORMATS, FACTORS
+
 env = Environment(loader=FileSystemLoader(searchpath="./templates"))
 _hti = Html2Image()
 
@@ -23,14 +25,48 @@ _box_html_template = env.get_template("box.html")
 _box_css_template = env.get_template("box.css")
 _img_html_template = env.get_template("img.html")
 
+_dpi = 300
+_width = 300
+_height = 300
+_unit = "in"
 
-def box(left, top, width, height, content="", **css_args):
+
+def set_meta_params(dpi=None, fmt=None, unit=None):
     """
     """
-    css_args["left"] = left
-    css_args["top"] = top
-    css_args["width"] = width
-    css_args["height"] = height
+    global _dpi
+    global _width
+    global _height
+    global _unit
+
+    if dpi:
+        _dpi = dpi
+    if fmt:
+        width, height = FORMATS[fmt]
+        _width = int(dpi*width)
+        _height = int(dpi*height)
+    if unit:
+        _unit = unit
+
+
+def _calculate_pixel(val, unit, base):
+    if not unit:
+        unit = _unit
+
+    if unit == "%":
+        return int(val*base/100)
+
+    factor = FACTORS[unit]
+    return int(val*factor*_dpi)
+
+
+def box(left, top, width, height, unit=None, content="", **css_args):
+    """
+    """
+    css_args["left"] = _calculate_pixel(left, _width)
+    css_args["top"] = _calculate_pixel(top, _height)
+    css_args["width"] = _calculate_pixel(width, _width)
+    css_args["height"] = _calculate_pixel(height, _height)
     box_id = next(_box_id)
 
     _box_html_list.append(_box_html_template.render(content=content, id=box_id))

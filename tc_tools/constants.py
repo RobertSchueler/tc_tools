@@ -40,3 +40,15 @@ FORMATS = {
     "square":       (3.5, 3.5),
     "square large": (4.75, 4.75)
 }
+
+#conversion factors to in
+FACTORS = {
+    "m":  39.3701,
+    "dm": 3.93701,
+    "cm": 0.393701,
+    "mm": 0.0393701,
+    "yd": 36,
+    "ft": 12,
+    "in": 1,
+    "em": 0.166044
+}
