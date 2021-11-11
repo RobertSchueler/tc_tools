@@ -53,6 +53,9 @@ def _calculate_pixel(val, unit, base):
     if not unit:
         unit = _unit
 
+    if unit == "px":
+        return int(val)
+
     if unit == "%":
         return int(val*base/100)
 
@@ -60,13 +63,24 @@ def _calculate_pixel(val, unit, base):
     return int(val*factor*_dpi)
 
 
+def _convert_to_px(left, top, width, height, unit):
+    return (
+        _calculate_pixel(left, unit, _width),
+        _calculate_pixel(top, unit, _height),
+        _calculate_pixel(width, unit, _width),
+        _calculate_pixel(height, unit, _height)
+    )
+
+
 def box(left, top, width, height, unit=None, content="", **css_args):
     """
     """
-    css_args["left"] = _calculate_pixel(left, unit, _width)
-    css_args["top"] = _calculate_pixel(top, unit, _height)
-    css_args["width"] = _calculate_pixel(width, unit, _width)
-    css_args["height"] = _calculate_pixel(height, unit, _height)
+    left, top, width, height = _convert_to_px(left, top, width, height, unit)
+
+    css_args["left"] = left
+    css_args["top"] = top
+    css_args["width"] = width
+    css_args["height"] = height
     box_id = next(_box_id)
 
     _box_html_list.append(_box_html_template.render(content=content, id=box_id))
@@ -77,8 +91,9 @@ def image(path, left, top, width, height, unit=None, **css_args):
     """
     """
     _hti.load_file(path)
+    left, top, width, height = _convert_to_px(left, top, width, height, unit)
     content = _img_html_template.render(path=path, width=width, height=height)
-    box(left, top, width, height, unit, content, **css_args)
+    box(left, top, width, height, "px", content, **css_args)
 
 
 def render(path, render_fun, source, *args, **kwargs):
