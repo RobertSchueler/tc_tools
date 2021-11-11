@@ -63,22 +63,22 @@ def _calculate_pixel(val, unit, base):
 def box(left, top, width, height, unit=None, content="", **css_args):
     """
     """
-    css_args["left"] = _calculate_pixel(left, _width)
-    css_args["top"] = _calculate_pixel(top, _height)
-    css_args["width"] = _calculate_pixel(width, _width)
-    css_args["height"] = _calculate_pixel(height, _height)
+    css_args["left"] = _calculate_pixel(left, unit, _width)
+    css_args["top"] = _calculate_pixel(top, unit, _height)
+    css_args["width"] = _calculate_pixel(width, unit, _width)
+    css_args["height"] = _calculate_pixel(height, unit, _height)
     box_id = next(_box_id)
 
     _box_html_list.append(_box_html_template.render(content=content, id=box_id))
     _box_css_list.append(_box_css_template.render(css_args=css_args, id=box_id))
 
 
-def image(path, left, top, width, height, **css_args):
+def image(path, left, top, width, height, unit=None, **css_args):
     """
     """
     _hti.load_file(path)
     content = _img_html_template.render(path=path, width=width, height=height)
-    box(left, top, width, height, content, **css_args)
+    box(left, top, width, height, unit, content, **css_args)
 
 
 def render(path, render_fun, source, *args, **kwargs):
