@@ -1,6 +1,7 @@
 """
 Contains common constants in the context of TCG.
 
+`FORMATS` contains standard card format sizes in inch (given as width, height tuple).
 Supported card formats are
 
 - poker
@@ -19,9 +20,21 @@ Supported card formats are
 - square small
 - square
 - square large
+
+`FACTORS` contains the factors for the conversion of a given unit to inch.
+
+Supported units are:
+
+- m (meter)
+- dm (decimeter)
+- cm (centimeter)
+- mm (millimeter)
+- yd (yard)
+- ft (foot)
+- in (inch)
+- em (standard font size)
 """
 
-#card format constants in inch
 FORMATS = {
     "poker":        (2.5, 3.5),
     "bridge":       (2.25, 3.5),
@@ -41,7 +54,6 @@ FORMATS = {
     "square large": (4.75, 4.75)
 }
 
-#conversion factors to in
 FACTORS = {
     "m":  39.3701,
     "dm": 3.93701,
