@@ -2,6 +2,12 @@ import numpy as np
 
 from PIL import Image
 
+"""
+Contains helper functions for image manipulation.
+Most functions should receive the path of the original image as input 
+and return the path of the resulting image as output.
+"""
+
 
 def array_map(fun):
     """
@@ -25,8 +31,8 @@ def array_map(fun):
     return inner_fun
 
 
-def array_pixel_map(fun):
-    """
-    """
-    def inner_fun(infile, outfile=None):
-        path
+# def array_pixel_map(fun):
+#     """
+#     """
+#     def inner_fun(infile, outfile=None):
+#         path
