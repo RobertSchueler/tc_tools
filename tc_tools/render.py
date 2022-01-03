@@ -3,7 +3,14 @@ from jinja2 import Environment, FileSystemLoader
 
 from tc_tools import FORMATS, FACTORS
 
-env = Environment(loader=FileSystemLoader(searchpath="./templates"))
+"""
+Contains functions for the rendering of cards.
+In order to render the cards, a html file is build automatically and then screenshotted.
+These functions can then be used inside a render function with the signature dict, *args, **kwargs -> None.
+All changes will be stored privately.
+"""
+
+_env = Environment(loader=FileSystemLoader(searchpath="./templates"))
 _hti = Html2Image()
 
 
@@ -18,12 +25,12 @@ _box_html_list = []
 _box_css_list = []
 _box_id = _box_id_iter()
 
-_index_html_template = env.get_template("index.html")
-_card_html_template = env.get_template("card.html")
-_card_css_template = env.get_template("card.css")
-_box_html_template = env.get_template("box.html")
-_box_css_template = env.get_template("box.css")
-_img_html_template = env.get_template("img.html")
+_index_html_template = _env.get_template("index.html")
+_card_html_template = _env.get_template("card.html")
+_card_css_template = _env.get_template("card.css")
+_box_html_template = _env.get_template("box.html")
+_box_css_template = _env.get_template("box.css")
+_img_html_template = _env.get_template("img.html")
 
 _dpi = 300
 _width = 300
@@ -33,6 +40,17 @@ _unit = "in"
 
 def set_meta_params(dpi=None, fmt=None, unit=None):
     """
+    Can be used to set the resolution, format and unit of measurement of the cards.
+    All float inputs of the functions of this module will be interpreted in the given unit.
+    Recommended usage is right before the call of `render`.
+
+    Parameters
+    ----------
+    dpi: float, optional
+    fmt: str, optional
+        a format string supported by the `constants` module.
+    unit: str, optional
+        a unit string supported by the `constants` module
     """
     global _dpi
     global _width
