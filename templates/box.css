@@ -2,7 +2,7 @@
 #{{ id }} {
     position: absolute;
     {% for key, value in css_args.items() %}
-        {{ key }}: {{ value }};
+        {{ key.replace("_","-") }}: {{ value }};
     {% endfor %}
 }
 {% endautoescape %}
