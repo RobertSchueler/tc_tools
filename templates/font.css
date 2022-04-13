@@ -1,0 +1,12 @@
+{% autoescape false %}
+
+@font-face
+
+{
+font-family: "{{ name }}";
+src: url("{{ url }}") format("{{ format_ }}");
+font-style: {{ style }};
+font-weight: {{ weight }};
+}
+
+{% endautoescape %}

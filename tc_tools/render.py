@@ -21,8 +21,9 @@ def _box_id_iter():
         yield f"box{i}"
 
 
-_box_html_list = []
-_box_css_list = []
+_html_list = []
+_css_list = []
+_css_initial_list = []
 _box_id = _box_id_iter()
 
 _index_html_template = _env.get_template("index.html")
@@ -31,6 +32,7 @@ _card_css_template = _env.get_template("card.css")
 _box_html_template = _env.get_template("box.html")
 _box_css_template = _env.get_template("box.css")
 _img_html_template = _env.get_template("img.html")
+_font_css_template = _env.get_template("font.css")
 
 _dpi = 300
 _width = 300
@@ -67,6 +69,15 @@ def set_meta_params(dpi=None, fmt=None, unit=None):
         _unit = unit
 
 
+def register_font(url, name=None, format_=None, style="normal", weight="normal"):
+    """WIP"""
+
+    if name is None or format_ is None:
+        name, format_ = url.split("/")[-1].split(".")
+
+    _css_initial_list.append(_font_css_template.render(url=url, name=name, format_=format_, style=style, weight=weight))
+
+
 def _calculate_pixel(val, unit, base):
     if not unit:
         unit = _unit
@@ -101,14 +112,13 @@ def box(left, top, width, height, unit=None, content="", **css_args):
     css_args["height"] = height
     box_id = next(_box_id)
 
-    _box_html_list.append(_box_html_template.render(content=content, id=box_id))
-    _box_css_list.append(_box_css_template.render(css_args=css_args, id=box_id))
+    _html_list.append(_box_html_template.render(content=content, id=box_id))
+    _css_list.append(_box_css_template.render(css_args=css_args, id=box_id))
 
 
 def image(path, left, top, width, height, unit=None, **css_args):
     """
     """
-    _hti.load_file(path)
     left, top, width, height = _convert_to_px(left, top, width, height, unit)
     content = _img_html_template.render(path=path, width=width, height=height)
     box(left, top, width, height, "px", content, **css_args)
@@ -130,17 +140,17 @@ def render(path, render_fun, source, *args, **kwargs):
 
     source: iteratable yielding dict like objects
     """
-    global _box_html_list
-    global _box_css_list
+    global _html_list
+    global _css_list
     global _box_id
     global _hti
 
     for i, data in enumerate(source):
-        _box_html_list, _box_css_list, _box_id, _hti = [], [], _box_id_iter(), Html2Image(output_path=path)
+        _html_list, _css_list, _box_id, _hti = [], _css_initial_list, _box_id_iter(), Html2Image(output_path=path)
         render_fun(data, *args, **kwargs)
-        content = _card_html_template.render(boxes=_box_html_list, id="main")
+        content = _card_html_template.render(boxes=_html_list, id="main")
         html_str = _index_html_template.render(content=content)
-        css_str = _card_css_template.render(boxes=_box_css_list)
+        css_str = _card_css_template.render(boxes=_css_list)
 
         _hti.screenshot(
             html_str=html_str,
