@@ -127,7 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-test.py
+../fabula_python/test.py
 .idea/
 example.png
 src/01-08_Lillim.png
@@ -140,3 +140,5 @@ example_blurred.jpg
 out_example.jpg
 screenshot.png
 *.jpg
+fabula_testapp/
+test2.py
