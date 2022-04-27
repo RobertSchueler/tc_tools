@@ -1,5 +1,7 @@
 from html2image import Html2Image
 from jinja2 import Environment, FileSystemLoader
+from fontTools.ttLib import TTFont
+import os
 
 from tc_tools import FORMATS, FACTORS
 
@@ -10,7 +12,9 @@ These functions can then be used inside a render function with the signature dic
 All changes will be stored privately.
 """
 
-_env = Environment(loader=FileSystemLoader(searchpath="./templates"))
+
+_searchpath = os.path.join(os.path.dirname(__file__), "../templates")
+_env = Environment(loader=FileSystemLoader(searchpath=_searchpath))
 _hti = Html2Image()
 
 
@@ -25,6 +29,7 @@ _html_list = []
 _css_list = []
 _css_initial_list = []
 _box_id = _box_id_iter()
+_fonts = {}
 
 _index_html_template = _env.get_template("index.html")
 _card_html_template = _env.get_template("card.html")
@@ -75,6 +80,7 @@ def register_font(url, name=None, format_=None, style="normal", weight="normal")
     if name is None or format_ is None:
         name, format_ = url.split("/")[-1].split(".")
 
+    _fonts[name] = TTFont(url)
     _css_initial_list.append(_font_css_template.render(url=url, name=name, format_=format_, style=style, weight=weight))
 
 
@@ -104,6 +110,7 @@ def _convert_to_px(left, top, width, height, unit):
 def box(left, top, width, height, unit=None, content="", **css_args):
     """
     """
+
     left, top, width, height = _convert_to_px(left, top, width, height, unit)
 
     css_args["left"] = left
@@ -155,5 +162,6 @@ def render(path, render_fun, source, *args, **kwargs):
         _hti.screenshot(
             html_str=html_str,
             css_str=css_str,
-            save_as=f"out{i}.jpg"
+            save_as=f"out{i}.jpg",
+            size=(_width, _height)
         )
