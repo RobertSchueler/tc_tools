@@ -193,6 +193,8 @@ def text(text, left, top, width, height, unit=None, font_size=20, vertical_align
 
 
 def _screenshot(path, width, height):
+    print(f"making screenshot to {path}")
+
     content = _card_html_template.render(boxes=_html_list, id="main")
     html_str = _index_html_template.render(content=content)
     css_str = _card_css_template.render(boxes=_css_list)
@@ -206,9 +208,13 @@ def _screenshot(path, width, height):
 
 
 def _reset_screen(path):
+    global _html_list
+    global _css_list
+    global _box_id
+    global _hti
     _html_list = []
-    _css_list = _css_initial_list,
-    _box_id = _box_id_iter(),
+    _css_list = _css_initial_list
+    _box_id = _box_id_iter()
     _hti = Html2Image(output_path = path)
 
 
@@ -228,6 +234,9 @@ def render(path, render_fun, source, *args, **kwargs):
 
     source: iteratable yielding dict like objects
     """
+    global _x_offset
+    global _y_offset
+
     global _html_list
     global _css_list
     global _box_id
@@ -239,17 +248,32 @@ def render(path, render_fun, source, *args, **kwargs):
         _screenshot(f"out{i}.jpg", _width, _height)
 
 
+def _reset_render_collection(path, h_margin, v_margin, width, height):
+    global _x_offset
+    global _y_offset
+
+    _reset_screen(path)
+    _x_offset, _y_offset = 0, 0
+    box(0, 0, width, height, "px", background_color= "white")
+    _x_offset, _y_offset = h_margin, v_margin
+
+
 def render_collection(
         path, render_fun, source,
         fmt = "A4", h_margin = 0, v_margin = 0, h_space = 0, v_space = 0,
-        repeat=False
+        repeat=False, *args, **kwargs
     ):
     global _x_offset
     global _y_offset
 
+    global _html_list
+    global _css_list
+    global _box_id
+    global _hti
+
     container_width, container_height = FORMATS[fmt]
-    container_width *= _dpi
-    container_height *= _dpi
+    container_width = int(container_width*_dpi)
+    container_height = int(container_height*_dpi)
     h_margin = _calculate_pixel(h_margin, _unit, container_width)
     v_margin = _calculate_pixel(v_margin, _unit, container_height)
     h_space = _calculate_pixel(h_space, _unit, container_width)
@@ -261,10 +285,7 @@ def render_collection(
         raise ValueError("Container height is too small")
 
     i = 0
-    _x_offset = h_margin
-    _y_offset = v_margin
-
-    _reset_screen(path)
+    _reset_render_collection(path, h_margin, v_margin, container_width, container_height)
     for data in source:
         while True:
             #check if there is enough space in the horizontal direction
@@ -277,11 +298,15 @@ def render_collection(
                 _x_offset = h_margin
                 _y_offset += v_space + _height
                 render_fun(data)
+                _x_offset += _width
             #otherwise begin a new page I guess
             else:
-                _screenshot(f"out{i}", container_width, container_height)
-                _reset_screen(path)
+                _screenshot(f"out{i}.jpg", container_width, container_height)
+                _reset_render_collection(path, h_margin, v_margin, container_width, container_height)
+                i += 1
                 if repeat:
                     break
             if not repeat:
                 break
+    # one last screenshot
+    _screenshot(f"out{i}.jpg", container_width, container_height)
