@@ -261,7 +261,7 @@ def _reset_render_collection(path, h_margin, v_margin, width, height):
 def render_collection(
         path, render_fun, source,
         fmt = "A4", h_margin = 0, v_margin = 0, h_space = 0, v_space = 0,
-        repeat=False, *args, **kwargs
+        repeat=False, unit=None, *args, **kwargs
     ):
     global _x_offset
     global _y_offset
@@ -274,10 +274,10 @@ def render_collection(
     container_width, container_height = FORMATS[fmt]
     container_width = int(container_width*_dpi)
     container_height = int(container_height*_dpi)
-    h_margin = _calculate_pixel(h_margin, _unit, container_width)
-    v_margin = _calculate_pixel(v_margin, _unit, container_height)
-    h_space = _calculate_pixel(h_space, _unit, container_width)
-    v_space = _calculate_pixel(v_space, _unit, container_height)
+    h_margin = _calculate_pixel(h_margin, unit, container_width)
+    v_margin = _calculate_pixel(v_margin, unit, container_height)
+    h_space = _calculate_pixel(h_space, unit, container_width)
+    v_space = _calculate_pixel(v_space, unit, container_height)
 
     if container_width - 2*h_margin < _width:
         raise ValueError("Container width is too small")
