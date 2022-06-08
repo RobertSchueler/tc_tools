@@ -241,5 +241,30 @@ def render_collection(
     h_space = _calculate_pixel(h_space, _unit, container_width)
     v_space = _calculate_pixel(v_space, _unit, container_height)
 
+    if container_width - 2*h_margin < _width:
+        raise ValueError("Container width is too small")
+    if container_height - 2*v_margin < _height:
+        raise ValueError("Container height is too small")
+
+    i = 0
+    _x_offset = h_margin
+    _y_offset = v_margin
     for data in source:
-        print(data)
+        while True:
+            #check if there is enough space in the horizontal direction
+            if _x_offset + h_space + _width + h_margin <= container_width:
+                _x_offset += h_space
+                render_fun(data)
+                _x_offset += _width
+            #check if there is at least space in the vertical direction
+            elif _y_offset + v_space + _height + v_margin <= container_height:
+                _x_offset = h_margin
+                _y_offset += v_space + _height
+                render_fun(data)
+            #otherwise begin a new page I guess
+            else:
+                pass
+
+
+
+
