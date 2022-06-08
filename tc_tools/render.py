@@ -294,7 +294,7 @@ def render_collection(
                 render_fun(data)
                 _x_offset += _width
             #check if there is at least space in the vertical direction
-            elif _y_offset + v_space + _height + v_margin <= container_height:
+            elif _y_offset + v_space + 2*_height + v_margin <= container_height:
                 _x_offset = h_margin
                 _y_offset += v_space + _height
                 render_fun(data)
