@@ -2,6 +2,7 @@ from html2image import Html2Image
 from jinja2 import Environment, FileSystemLoader
 from fontTools.ttLib import TTFont
 import os
+import numpy as np
 
 from tc_tools import FORMATS, FACTORS
 
@@ -38,11 +39,28 @@ _box_html_template = _env.get_template("box.html")
 _box_css_template = _env.get_template("box.css")
 _img_html_template = _env.get_template("img.html")
 _font_css_template = _env.get_template("font.css")
+_text_html_template = _env.get_template("text.html")
+_text_css_template = _env.get_template("text.css")
 
 _dpi = 300
 _width = 300
 _height = 300
 _unit = "in"
+
+
+def _get_text_width(name, text):
+    font = _fonts[name]
+    cmap = font['cmap']
+    t = cmap.getcmap(3, 1).cmap
+    s = font.getGlyphSet()
+    units_per_em = font['head'].unitsPerEm
+    widths = [
+        s[t[ord(c)]].width if ord(c) in t and t[ord(c)] in s
+        else s['.notdef'].width
+        for c in text
+    ]
+    total = sum(widths)/units_per_em;
+    return total
 
 
 def set_meta_params(dpi=None, fmt=None, unit=None):
@@ -107,7 +125,7 @@ def _convert_to_px(left, top, width, height, unit):
     )
 
 
-def box(left, top, width, height, unit=None, content="", **css_args):
+def box(left, top, width, height, unit=None, content="", box_id=None, **css_args):
     """
     """
 
@@ -117,7 +135,24 @@ def box(left, top, width, height, unit=None, content="", **css_args):
     css_args["top"] = top
     css_args["width"] = width
     css_args["height"] = height
-    box_id = next(_box_id)
+    if box_id is None:
+        box_id = next(_box_id)
+
+    # ########test
+    # if "font_family" in css_args and css_args["font_family"].strip('"') in _fonts:
+    #     name = css_args["font_family"].strip('"')
+    #     try:
+    #         p = 0.95
+    #         lh = 1/1.5
+    #         m = np.sqrt(lh/p*height/width * _get_text_width(name, str(content)))
+    #         print(m)
+    #         max_by_width = round(m)*p*width / _get_text_width(name, str(content))
+    #         print(f"diff: {height - round(m)*max_by_width}, {height} ")
+    #         css_args["font_size"] = min(max_by_width, height)
+    #     except ZeroDivisionError:
+    #         pass
+    #     # css_args["font_size"] = "100px"
+    # ########
 
     _html_list.append(_box_html_template.render(content=content, id=box_id))
     _css_list.append(_box_css_template.render(css_args=css_args, id=box_id))
@@ -129,6 +164,31 @@ def image(path, left, top, width, height, unit=None, **css_args):
     left, top, width, height = _convert_to_px(left, top, width, height, unit)
     content = _img_html_template.render(path=path, width=width, height=height)
     box(left, top, width, height, "px", content, **css_args)
+
+
+def text(text, left, top, width, height, unit=None, font_size=20, vertical_align="center",
+         horizontal_align="center", **css_args):
+    """
+    """
+    left, top, width, height = _convert_to_px(left, top, width, height, unit)
+
+    text_css = {}
+    if vertical_align == "center":
+        css_args.update({
+            "display": "flex",
+            "justify_content": "center",
+            "font_size": font_size,
+            "align_items": "center"
+        })
+
+    box_id = next(_box_id)
+    _css_list.append(_text_css_template.render(id=box_id, css_args=text_css))
+
+    content = _text_html_template.render(text=text)
+    #content = "Hallo Welt"
+    box(left, top, width, height, "px", content=content, text_align=horizontal_align, box_id=box_id, **css_args)
+
+
 
 
 def render(path, render_fun, source, *args, **kwargs):

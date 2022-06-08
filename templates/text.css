@@ -1,0 +1,7 @@
+{% autoescape false %}
+#{{ id }} div {
+    {% for key, value in css_args.items() %}
+        {{ key.replace("_","-") }}: {{ value }};
+    {% endfor %}
+}
+{% endautoescape %}

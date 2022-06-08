@@ -142,3 +142,5 @@ screenshot.png
 *.jpg
 fabula_testapp/
 test2.py
+rocko_testapp/
+tsuro_testapp/
