@@ -265,7 +265,7 @@ def render_collection(
                 render_fun(data)
             #otherwise begin a new page I guess
             else:
-                pass
+                _screenshot(f"out{i}", container_width, container_height)
 
 
 
