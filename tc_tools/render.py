@@ -205,6 +205,13 @@ def _screenshot(path, width, height):
     )
 
 
+def _reset_screen(path):
+    _html_list = []
+    _css_list = _css_initial_list,
+    _box_id = _box_id_iter(),
+    _hti = Html2Image(output_path = path)
+
+
 def render(path, render_fun, source, *args, **kwargs):
     """
     Renders all cards according to the function render_fun using the data obtained from source.
@@ -227,7 +234,7 @@ def render(path, render_fun, source, *args, **kwargs):
     global _hti
 
     for i, data in enumerate(source):
-        _html_list, _css_list, _box_id, _hti = [], _css_initial_list, _box_id_iter(), Html2Image(output_path=path)
+        _reset_screen(path)
         render_fun(data, *args, **kwargs)
         _screenshot(f"out{i}.jpg", _width, _height)
 
@@ -251,6 +258,8 @@ def render_collection(
     i = 0
     _x_offset = h_margin
     _y_offset = v_margin
+
+    _reset_screen(path)
     for data in source:
         while True:
             #check if there is enough space in the horizontal direction
@@ -266,6 +275,7 @@ def render_collection(
             #otherwise begin a new page I guess
             else:
                 _screenshot(f"out{i}", container_width, container_height)
+                _reset_screen(path)
 
 
 
