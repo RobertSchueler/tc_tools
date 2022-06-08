@@ -47,6 +47,9 @@ _width = 300
 _height = 300
 _unit = "in"
 
+_x_offset = 0
+_y_offset = 0
+
 
 def _get_text_width(name, text):
     font = _fonts[name]
@@ -225,3 +228,13 @@ def render(path, render_fun, source, *args, **kwargs):
             save_as=f"out{i}.jpg",
             size=(_width, _height)
         )
+
+
+def render_collection(
+        path, render_fun, source,
+        fmt = "A4", h_margin = 12, v_margin = 12, h_space = 0, v_space = 0,
+        repeat=False
+    ):
+    container_width, container_height = FORMATS[fmt]
+    _x_offset, _y_offset = h_margin, v_margin
+    pass

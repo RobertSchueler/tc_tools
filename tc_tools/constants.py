@@ -20,6 +20,7 @@ Supported card formats are
 - square small
 - square
 - square large
+- A4
 
 `FACTORS` contains the factors for the conversion of a given unit to inch.
 
@@ -51,7 +52,8 @@ FORMATS = {
     "index giant":  (4.75, 7),
     "square small": (3, 3),
     "square":       (3.5, 3.5),
-    "square large": (4.75, 4.75)
+    "square large": (4.75, 4.75),
+    "A4":           (8.26772, 11.6929)
 }
 
 FACTORS = {
