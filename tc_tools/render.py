@@ -232,9 +232,14 @@ def render(path, render_fun, source, *args, **kwargs):
 
 def render_collection(
         path, render_fun, source,
-        fmt = "A4", h_margin = 12, v_margin = 12, h_space = 0, v_space = 0,
+        fmt = "A4", h_margin = 0, v_margin = 0, h_space = 0, v_space = 0,
         repeat=False
     ):
     container_width, container_height = FORMATS[fmt]
-    _x_offset, _y_offset = h_margin, v_margin
-    pass
+    h_margin = _calculate_pixel(h_margin, _unit, container_width)
+    v_margin = _calculate_pixel(v_margin, _unit, container_height)
+    h_space = _calculate_pixel(h_space, _unit, container_width)
+    v_space = _calculate_pixel(v_space, _unit, container_height)
+
+    for data in source:
+        print(data)
