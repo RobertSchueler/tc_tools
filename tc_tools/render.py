@@ -134,8 +134,8 @@ def box(left, top, width, height, unit=None, content="", box_id=None, **css_args
 
     left, top, width, height = _convert_to_px(left, top, width, height, unit)
 
-    css_args["left"] = left
-    css_args["top"] = top
+    css_args["left"] = _x_offset + left
+    css_args["top"] = _y_offset + top
     css_args["width"] = width
     css_args["height"] = height
     if box_id is None:
@@ -244,7 +244,12 @@ def render_collection(
         fmt = "A4", h_margin = 0, v_margin = 0, h_space = 0, v_space = 0,
         repeat=False
     ):
+    global _x_offset
+    global _y_offset
+
     container_width, container_height = FORMATS[fmt]
+    container_width *= _dpi
+    container_height *= _dpi
     h_margin = _calculate_pixel(h_margin, _unit, container_width)
     v_margin = _calculate_pixel(v_margin, _unit, container_height)
     h_space = _calculate_pixel(h_space, _unit, container_width)
