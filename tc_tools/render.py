@@ -276,7 +276,7 @@ def render_collection(
             else:
                 _screenshot(f"out{i}", container_width, container_height)
                 _reset_screen(path)
-
-
-
-
+                if repeat:
+                    break
+            if not repeat:
+                break
