@@ -88,7 +88,10 @@ def set_meta_params(dpi=None, fmt=None, unit=None):
     if dpi:
         _dpi = dpi
     if fmt:
-        width, height = FORMATS[fmt]
+        if isinstance(fmt, tuple):
+            width, height = fmt
+        else:
+            width, height = FORMATS[fmt]
         _width = int(dpi*width)
         _height = int(dpi*height)
     if unit:
@@ -193,8 +196,6 @@ def text(text, left, top, width, height, unit=None, font_size=20, vertical_align
 
 
 def _screenshot(path, width, height):
-    print(f"making screenshot to {path}")
-
     content = _card_html_template.render(boxes=_html_list, id="main")
     html_str = _index_html_template.render(content=content)
     css_str = _card_css_template.render(boxes=_css_list)
@@ -258,6 +259,17 @@ def _reset_render_collection(path, h_margin, v_margin, width, height):
     _x_offset, _y_offset = h_margin, v_margin
 
 
+def _calculate_margin(margin, unit, size, space, base):
+    if margin == "centering":
+        n = 0
+        while n*size + (n-1)*space <= base:
+            n += 1
+        n -= 1
+        return int((base - n*size - (n-1)*space)/2)
+
+    return _calculate_pixel(margin, unit, base)
+
+
 def render_collection(
         path, render_fun, source,
         fmt = "A4", h_margin = 0, v_margin = 0, h_space = 0, v_space = 0,
@@ -274,10 +286,10 @@ def render_collection(
     container_width, container_height = FORMATS[fmt]
     container_width = int(container_width*_dpi)
     container_height = int(container_height*_dpi)
-    h_margin = _calculate_pixel(h_margin, unit, container_width)
-    v_margin = _calculate_pixel(v_margin, unit, container_height)
     h_space = _calculate_pixel(h_space, unit, container_width)
     v_space = _calculate_pixel(v_space, unit, container_height)
+    h_margin = _calculate_margin(h_margin, unit, _width, h_space, container_width)
+    v_margin = _calculate_margin(v_margin, unit, _height, v_space, container_height)
 
     if container_width - 2*h_margin < _width:
         raise ValueError("Container width is too small")
