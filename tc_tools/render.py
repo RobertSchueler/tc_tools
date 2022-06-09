@@ -192,6 +192,17 @@ def text(text, left, top, width, height, unit=None, font_size=20, vertical_align
     box(left, top, width, height, "px", content=content, text_align=horizontal_align, box_id=box_id, **css_args)
 
 
+def _screenshot(path, width, height):
+    content = _card_html_template.render(boxes=_html_list, id="main")
+    html_str = _index_html_template.render(content=content)
+    css_str = _card_css_template.render(boxes=_css_list)
+
+    _hti.screenshot(
+        html_str=html_str,
+        css_str=css_str,
+        save_as=path,
+        size=(width, height)
+    )
 
 
 def render(path, render_fun, source, *args, **kwargs):
@@ -218,16 +229,7 @@ def render(path, render_fun, source, *args, **kwargs):
     for i, data in enumerate(source):
         _html_list, _css_list, _box_id, _hti = [], _css_initial_list, _box_id_iter(), Html2Image(output_path=path)
         render_fun(data, *args, **kwargs)
-        content = _card_html_template.render(boxes=_html_list, id="main")
-        html_str = _index_html_template.render(content=content)
-        css_str = _card_css_template.render(boxes=_css_list)
-
-        _hti.screenshot(
-            html_str=html_str,
-            css_str=css_str,
-            save_as=f"out{i}.jpg",
-            size=(_width, _height)
-        )
+        _screenshot(f"out{i}.jpg", _width, _height)
 
 
 def render_collection(
