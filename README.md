@@ -64,20 +64,20 @@ Here is a diagram, because diagrams are cool:
 First we need to implement the basic structure and logic and get a first running application.
 In particular we need to implement the following features:
 
-- create the base module structure
-- implement a method that reads an svg and creates an ElementTree object
-- implement a method that writes an svg from an ElementTree object
-- implement a method that calls Inkscape to create a png from ElementTree
-- implement a basic data source object
-- implement a method that creates data source object from excel sheet
-- implement root SVG object (allowing children to be mapped)
-- implement placeholder SVG object (for unknown svg elements)
-- implement a mapper from ElementTree to root SVG
-- implement a simple mapper mapping ElementTree substructure and placeholder SVG object to ElementTree substructure
-- implement a simple mapper mapping ElementTree object and root SVG object to ElementTree object
-- implement base processor method combining all the previous steps
-- implement simple GUI
-- implement command line integration
+- [x] create the base module structure
+- [ ] implement a method that reads an svg and creates an ElementTree object
+- [ ] implement a method that writes an svg from an ElementTree object
+- [ ] implement a method that calls Inkscape to create a png from ElementTree
+- [ ] implement a basic data source object
+- [ ] implement a method that creates data source object from excel sheet
+- [ ] implement root SVG object (allowing children to be mapped)
+- [ ] implement placeholder SVG object (for unknown svg elements)
+- [ ] implement a mapper from ElementTree to root SVG
+- [ ] implement a simple mapper mapping ElementTree substructure and placeholder SVG object to ElementTree substructure
+- [ ] implement a simple mapper mapping ElementTree object and root SVG object to ElementTree object
+- [ ] implement base processor method combining all the previous steps
+- [ ] implement simple GUI
+- [ ] implement command line integration
 
 The resulting version will be relatively useless, since it only produces one rendering of a given template svg per line in the excel sheet. But everything will be in place, so it will hopefully be a good starting point for future features.
 
