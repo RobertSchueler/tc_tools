@@ -65,7 +65,7 @@ First we need to implement the basic structure and logic and get a first running
 In particular we need to implement the following features:
 
 - [x] create the base module structure
-- [ ] implement a method that reads an svg and creates an ElementTree object
+- [x] implement a method that reads an svg and creates an ElementTree object
 - [ ] implement a method that writes an svg from an ElementTree object
 - [ ] implement a method that calls Inkscape to create a png from ElementTree
 - [ ] implement a basic data source object
