@@ -70,8 +70,8 @@ In particular we need to implement the following features:
 - [x] implement a method that calls Inkscape to create a png from ElementTree
 - [x] implement a basic data source object
 - [x] implement a method that creates data source object from excel sheet
-- [ ] implement root SVG object (allowing children to be mapped)
-- [ ] implement placeholder SVG object (for unknown svg elements)
+- [x] implement root SVG object (allowing children to be mapped)
+- [x] implement placeholder SVG object (for unknown svg elements)
 - [ ] implement a mapper from ElementTree to root SVG
 - [ ] implement a simple mapper mapping ElementTree substructure and placeholder SVG object to ElementTree substructure
 - [ ] implement a simple mapper mapping ElementTree object and root SVG object to ElementTree object
