@@ -67,7 +67,7 @@ In particular we need to implement the following features:
 - [x] create the base module structure
 - [x] implement a method that reads an svg and creates an ElementTree object
 - [x] implement a method that writes an svg from an ElementTree object
-- [ ] implement a method that calls Inkscape to create a png from ElementTree
+- [x] implement a method that calls Inkscape to create a png from ElementTree
 - [ ] implement a basic data source object
 - [ ] implement a method that creates data source object from excel sheet
 - [ ] implement root SVG object (allowing children to be mapped)
