@@ -1,5 +1,7 @@
 from xml.etree.ElementTree import ElementTree, Element
 
+import pandas as pd
+
 from mapper import SVGElement
 
 
@@ -20,3 +22,7 @@ class TestDataFactory():
     @staticmethod
     def create_svg_element():
         return SVGElement()
+
+    @staticmethod
+    def create_pd_dataframe():
+        return pd.DataFrame({"a": [1,2,3,4], "b": ["a", "b", "c", "d"]})

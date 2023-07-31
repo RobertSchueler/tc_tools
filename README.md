@@ -75,7 +75,7 @@ In particular we need to implement the following features:
 - [x] implement a mapper from ElementTree to root SVG
 - [x] implement a simple mapper mapping Element and placeholder SVG object to Element
 - [x] implement a simple mapper mapping ElementTree object and root SVG object to ElementTree object
-- [ ] implement base processor method combining all the previous steps
+- [x] implement base processor method combining all the previous steps
 - [ ] implement simple GUI
 - [ ] implement command line integration
 
