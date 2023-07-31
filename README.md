@@ -79,7 +79,7 @@ In particular we need to implement the following features:
 - [x] create GUI window
 - [x] add three file picker to GUI named
 - [x] add labels for the three file picker (excel sheet, template, options)
-- [ ] add button labeled "render deck"
+- [x] add button labeled "render deck"
 - [ ] add processor call to button
 - [ ] implement command line integration
 
