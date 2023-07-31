@@ -76,9 +76,9 @@ In particular we need to implement the following features:
 - [x] implement a simple mapper mapping Element and placeholder SVG object to Element
 - [x] implement a simple mapper mapping ElementTree object and root SVG object to ElementTree object
 - [x] implement base processor method combining all the previous steps
-- [ ] create GUI window
-- [ ] add three file picker to GUI named
-- [ ] add labels for the three file picker (excel sheet, template, options)
+- [x] create GUI window
+- [x] add three file picker to GUI named
+- [x] add labels for the three file picker (excel sheet, template, options)
 - [ ] add button labeled "render deck"
 - [ ] add processor call to button
 - [ ] implement command line integration
