@@ -76,7 +76,11 @@ In particular we need to implement the following features:
 - [x] implement a simple mapper mapping Element and placeholder SVG object to Element
 - [x] implement a simple mapper mapping ElementTree object and root SVG object to ElementTree object
 - [x] implement base processor method combining all the previous steps
-- [ ] implement simple GUI
+- [ ] create GUI window
+- [ ] add three file picker to GUI named
+- [ ] add labels for the three file picker (excel sheet, template, options)
+- [ ] add button labeled "render deck"
+- [ ] add processor call to button
 - [ ] implement command line integration
 
 The resulting version will be relatively useless, since it only produces one rendering of a given template svg per line in the excel sheet. But everything will be in place, so it will hopefully be a good starting point for future features.
