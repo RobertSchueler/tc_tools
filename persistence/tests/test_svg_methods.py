@@ -25,4 +25,4 @@ class TestSVGMethods(unittest.TestCase):
         with patch("os.system") as os_system_mock:
             render_svg_to_png("ink", "svg.svg", "png.png", 111)
 
-        os_system_mock.assert_called_once_with("ink --export-filename=png.png --export-dpi=111 svg.svg")
+        os_system_mock.assert_called_once_with('"ink" --export-filename=png.png --export-dpi=111 svg.svg')

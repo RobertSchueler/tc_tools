@@ -2,7 +2,7 @@ import unittest
 from xml.etree.ElementTree import Element, ElementTree
 
 from mapper import extract_svg_root_from_element_tree
-from mapper.tests.TestDataFactory import TestDataFactory
+from TestDataFactory import TestDataFactory
 
 
 class TestToSVGMapper(unittest.TestCase):

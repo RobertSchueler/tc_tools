@@ -1,7 +1,7 @@
 import unittest
 
 from mapper import merge_svg_root_and_element_tree, SVGRoot, merge_svg_and_element
-from mapper.tests.TestDataFactory import TestDataFactory
+from TestDataFactory import TestDataFactory
 
 
 class TestToElementTreeMapper(unittest.TestCase):

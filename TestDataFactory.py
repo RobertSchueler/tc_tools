@@ -26,3 +26,7 @@ class TestDataFactory():
     @staticmethod
     def create_pd_dataframe():
         return pd.DataFrame({"a": [1,2,3,4], "b": ["a", "b", "c", "d"]})
+
+    @staticmethod
+    def create_options_text():
+        return "inkscape_path:ink:scape:path"
