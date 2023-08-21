@@ -1,7 +1,8 @@
 from TestDataFactory import TestDataFactory
-from gui.options_parser import parse_options_file
+from persistence import parse_options_file
 import os
 import unittest
+
 
 class TestParseOptionsFile(unittest.TestCase):
     def setUp(self) -> None:

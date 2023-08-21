@@ -2,9 +2,9 @@ import PySimpleGUI as sg
 
 from processor import base_process, base_process_single_item
 
-from .options_parser import parse_options_file
+from persistence.configuration_parser import parse_options_file
 
-LABEL_SIZE = (7, 1)
+LABEL_SIZE = (10, 1)
 INPUT_FIELD_SIZE = (45, 1)
 
 window = sg.Window(
@@ -21,8 +21,8 @@ window = sg.Window(
             sg.FileBrowse(file_types=(("SVG Files", "*.svg"),))
         ],
         [
-            sg.Text('Options', size=LABEL_SIZE),
-            sg.Input(key='-options_path-', size=INPUT_FIELD_SIZE),
+            sg.Text('Configurations', size=LABEL_SIZE),
+            sg.Input(key='-configuration_path-', size=INPUT_FIELD_SIZE),
             sg.FileBrowse(file_types=(("Text files", "*.txt"),))
         ],
         [sg.Button("Render deck")]
@@ -39,7 +39,7 @@ while True:
         try:
             excel_path: str = values['-excel_path-']
             svg_path: str = values['-svg_path-']
-            options_path: str = values['-options_path-']
+            options_path: str = values['-configuration_path-']
         except KeyError:
             continue
 
