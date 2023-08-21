@@ -1,3 +1,4 @@
+import os
 from typing import Callable
 
 from mapper import extract_svg_root_from_element_tree, SVGRoot, \
@@ -19,7 +20,14 @@ def base_process(
         single_item_process(svg_root, data)
         merged_etree = merge_svg_root_and_element_tree(svg_root, etree)
         write_element_tree_to_svg(merged_etree, "./temp.svg")
-        render_svg_to_png(inkscape_path, "./temp.svg", f"./out{i}.png", 200)
+        excel_dir = os.path.dirname(os.path.realpath(excel_path))
+        render_svg_to_png(
+            inkscape_path,
+            "./temp.svg",
+            os.path.join(excel_dir, f"out{i}.png"),
+            200
+        )
+    os.remove("./temp.svg")
 
 
 def base_process_single_item(svg_root: SVGRoot, data: dict) -> None:

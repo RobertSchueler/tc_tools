@@ -19,6 +19,3 @@ class TestProcessor(unittest.TestCase):
         pandas_read_excel_mock.assert_called_once()
         os_system_mock.assert_called()
         etree_parse_mock.assert_called()
-
-    def tearDown(self) -> None:
-        os.remove("./temp.svg")
