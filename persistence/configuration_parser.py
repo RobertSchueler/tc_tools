@@ -1,7 +1,7 @@
 SEPARATOR = ":"
 
 
-def parse_options_file(options_file_path: str) -> str:
+def parse_configuration_file(options_file_path: str) -> str:
     options_dict: dict = {}
     with open(options_file_path, "r", encoding="utf-8") as file:
         for line in file:

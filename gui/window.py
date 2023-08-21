@@ -2,8 +2,6 @@ import PySimpleGUI as sg
 
 from processor import base_process, base_process_single_item
 
-from persistence.configuration_parser import parse_options_file
-
 LABEL_SIZE = (10, 1)
 INPUT_FIELD_SIZE = (45, 1)
 
@@ -39,9 +37,8 @@ while True:
         try:
             excel_path: str = values['-excel_path-']
             svg_path: str = values['-svg_path-']
-            options_path: str = values['-configuration_path-']
+            configuration_path: str = values['-configuration_path-']
         except KeyError:
             continue
 
-        inkscape_path = parse_options_file(options_path)
-        base_process(inkscape_path, excel_path, svg_path, base_process_single_item)
+        base_process(configuration_path, excel_path, svg_path, base_process_single_item)

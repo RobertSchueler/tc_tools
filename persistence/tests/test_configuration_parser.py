@@ -1,5 +1,5 @@
 from TestDataFactory import TestDataFactory
-from persistence import parse_options_file
+from persistence import parse_configuration_file
 import os
 import unittest
 
@@ -11,7 +11,7 @@ class TestParseOptionsFile(unittest.TestCase):
             file.write(TestDataFactory.create_options_text())
 
     def test_parse_options_should_parse_file_correctly(self) -> None:
-        result = parse_options_file(self.test_file_path)
+        result = parse_configuration_file(self.test_file_path)
         self.assertEqual(result, "ink:scape:path")
 
     def tearDown(self) -> None:

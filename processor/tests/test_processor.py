@@ -1,10 +1,11 @@
-import os
 import unittest
 from unittest.mock import patch
 
+from TestDataFactory import TestDataFactory
 from processor import base_process, base_process_single_item
 
-from TestDataFactory import TestDataFactory
+import persistence
+import os
 
 
 class TestProcessor(unittest.TestCase):
@@ -14,8 +15,10 @@ class TestProcessor(unittest.TestCase):
             with patch("os.system") as os_system_mock:
                 with patch("xml.etree.ElementTree.parse") as etree_parse_mock:
                     etree_parse_mock.return_value = TestDataFactory.create_element_tree(3)
-                    base_process("ink", "exc", "svg", base_process_single_item)
+                    with patch("processor.processor.parse_configuration_file") as parse_configurations_file_mock:
+                        base_process("opt", "exc", "svg", base_process_single_item)
 
-        pandas_read_excel_mock.assert_called_once()
+        parse_configurations_file_mock.assert_called_once_with("opt")
+        pandas_read_excel_mock.assert_called_once_with("exc")
         os_system_mock.assert_called()
         etree_parse_mock.assert_called()
