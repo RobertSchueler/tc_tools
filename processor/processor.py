@@ -8,12 +8,12 @@ from persistence import create_simple_data_source_from_excel, parse_svg_to_eleme
 
 
 def base_process(
-        options_path: str,
+        configurations_path: str,
         excel_path: str,
         svg_path: str,
         single_item_process: Callable[[SVGRoot, dict], None]
 ) -> None:
-    inkscape_path = parse_configuration_file(options_path)
+    inkscape_path = parse_configuration_file(configurations_path)
     data_source = create_simple_data_source_from_excel(excel_path)
     etree = parse_svg_to_element_tree(svg_path)
     for i, data in enumerate(data_source):

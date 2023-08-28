@@ -23,7 +23,7 @@ The Excel file should contain rowwise information about all your cards, currentl
 
 The SVG file should contain a template of how your cards should look like.
 
-The configuration file contains information about your system and your preferences by lines of the form `<parameter>=<value>`.
+The configuration file contains information about your system and your preferences by lines of the form `<parameter>:<value>`.
 The only supported parameter is currently `inkscape_path` which is mandatory to set to the absolute path of your local inkscape installation.
 
 Currently the render process just produces one copy of a png rendering of your template file for each row in your excel file. This will change in the future.
@@ -79,6 +79,7 @@ Here is a diagram, because diagrams are cool:
 - no useless documentation in code
 - make it typesafe
 - in the directory `manual_tests` there are additional non-automatic tests. These require a suitable local setup with inkscape up and running. You can check [this](manual_tests/README.md) out for more information.
+- the GUI is not automatically tested but just checked manually
 
 ## Plan going forward (to version 0.2.0)
 
