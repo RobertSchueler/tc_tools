@@ -1,18 +1,24 @@
 import unittest
 from unittest.mock import patch
 
-from TestDataFactory import TestDataFactory
+from factories import PandasDataframeFactory
 from persistence import create_simple_data_source_from_excel
 
 
 class TestExcelSheetMethods(unittest.TestCase):
+    def setUp(self) -> None:
+        self.pandas_dataframe_content_dict = PandasDataframeFactory().build_pandas_conform_dict()
+        self.pandas_dataframe = PandasDataframeFactory().build(
+            row_data=self.pandas_dataframe_content_dict
+        )
+
     def test_create_simple_data_source_from_excel_should_return_simple_data_source(self):
         with patch("pandas.read_excel") as pandas_read_excel_mock:
-            pandas_read_excel_mock.return_value = TestDataFactory.create_pd_dataframe()
+            pandas_read_excel_mock.return_value = self.pandas_dataframe
             data_source = create_simple_data_source_from_excel("excel.xmhl")
 
         pandas_read_excel_mock.assert_called_once_with("excel.xmhl")
-        expected_data = [{"a": 1, "b": "a"}, {"a": 2, "b": "b"}, {"a": 3, "b": "c"}, {"a": 4, "b": "d"}]
 
-        for entry, expected_entry in zip(data_source, expected_data):
-            self.assertEqual(entry, expected_entry)
+        for entry_idx, entry in enumerate(data_source):
+            for key, value in self.pandas_dataframe_content_dict.items():
+                self.assertEqual(entry[key], value[entry_idx])

@@ -136,3 +136,4 @@ The resulting version is relatively useless since it only produces copies of the
 - pipeline
 - PiPy publishing
 - add a single executable to published versions
+- overhaul package structure to be more pythonic
