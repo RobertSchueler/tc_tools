@@ -78,6 +78,20 @@ def dict_of(key_generator, value_generator, minlen: int = 1, maxlen: int = 10):
     return inner
 
 
+def dict_with_fixed_keys(keys, value_generator):
+    def inner():
+        return {key: value_generator() for key in keys}
+    return inner
+
+
+def concatenate_dicts(dict_generator, other_dict_generator):
+    def inner():
+        generated_dict: dict = dict_generator()
+        generated_dict.update(other_dict_generator())
+        return generated_dict
+    return inner
+
+
 def tuple_of(*generators):
     def inner():
         return (generator() for generator in generators)

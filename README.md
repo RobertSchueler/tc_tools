@@ -85,13 +85,13 @@ Here is a diagram, because diagrams are cool:
 
 Next I will work on allowing to replace an image in the template by another image. First the `SVGRoot` has to be updated to be searchable.
 
-- [] save inkscape labels when mapping to `SVGRoot`
-- [] make `SVGRoot` searchable by inkscape labels
-- [] create an `SVGElement` representing an image with property `href`
-- [] map images of the ElementTree to `SVGElement` images
-- [] support the mapping of changed `href` properties
-- [] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
-- [] make a domino example project of domino, where the background the separating image and the images used for the dots can be customized
+- [x] save inkscape labels when mapping to `SVGRoot`
+- [ ] make `SVGRoot` searchable by inkscape labels
+- [ ] create an `SVGElement` representing an image with property `href`
+- [ ] map images of the ElementTree to `SVGElement` images
+- [ ] support the mapping of changed `href` properties
+- [ ] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
+- [ ] make a domino example project of domino, where the background the separating image and the images used for the dots can be customized
 
 In version 0.2.0 we should be able to exchange pictures in our cards making.
 
