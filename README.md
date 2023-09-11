@@ -87,7 +87,7 @@ Next I will work on allowing to replace an image in the template by another imag
 
 - [x] save inkscape labels when mapping to `SVGRoot`
 - [x] make `SVGRoot` searchable by inkscape labels
-- [ ] create an `SVGElement` representing an image with property `href`
+- [x] create an `SVGElement` representing an image with property `href`
 - [ ] map images of the ElementTree to `SVGElement` images
 - [ ] support the mapping of changed `href` properties
 - [ ] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
