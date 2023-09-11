@@ -2,12 +2,15 @@ import random
 from string import ascii_lowercase, ascii_uppercase, digits, punctuation
 
 
-def positive_integer():
-    return random.randint(0, 100)
+def integer(min_size=-100, max_size=100):
+    def inner():
+        return random.randint(min_size, max_size)
+
+    return inner
 
 
-def integer():
-    return random.randint(-100, 100)
+def positive_integer(min_size=0, max_size=100):
+    return integer(min_size, max_size)
 
 
 def full_string(
@@ -16,8 +19,11 @@ def full_string(
         allow_digits: bool = True,
         allow_punctuation: bool = True,
         minlen: int = 1,
-        maxlen: int = 20
+        maxlen: int = 20,
+        forbidden_strings: list[str] = None
 ):
+    if forbidden_strings is None:
+        forbidden_strings = []
     alphabet: str = ""
     if allow_lowercase:
         alphabet += ascii_lowercase
@@ -28,40 +34,49 @@ def full_string(
     if allow_punctuation:
         alphabet += punctuation
 
-    length: int = random.randint(minlen, maxlen)
-    return "".join([random.choice(ascii_lowercase) for _ in range(length)])
+    def inner() -> str:
+        length: int = random.randint(minlen, maxlen)
+        while True:
+            candidate: str = "".join([random.choice(ascii_lowercase) for _ in range(length)])
+            if candidate in forbidden_strings:
+                continue
+            return candidate
+
+    return inner
 
 
-def lowercase_string(minlen: int = 1, maxlen: int = 20):
-    return full_string(True, False, False, False, minlen, maxlen)
+def lowercase_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
+    return full_string(True, False, False, False, minlen, maxlen, forbidden_strings)
 
 
-def uppercase_string(minlen: int = 1, maxlen: int = 20):
-    return full_string(False, True, False, False, minlen, maxlen)
+def uppercase_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
+    return full_string(False, True, False, False, minlen, maxlen, forbidden_strings)
 
 
-def character_string(minlen: int = 1, maxlen: int = 20):
-    return full_string(True, True, False, False, minlen, maxlen)
+def character_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
+    return full_string(True, True, False, False, minlen, maxlen, forbidden_strings)
 
 
-def verbatim_string(minlen: int = 1, maxlen: int = 20):
-    return full_string(True, True, False, True, minlen, maxlen)
+def verbatim_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
+    return full_string(True, True, False, True, minlen, maxlen, forbidden_strings)
 
 
-def digit_string(minlen: int = 1, maxlen: int = 20):
-    return full_string(False, False, True, False, minlen, maxlen)
+def digit_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
+    return full_string(False, False, True, False, minlen, maxlen, forbidden_strings)
 
 
-def no_digit_string(minlen: int = 1, maxlen: int = 20):
-    return full_string(True, True, False, True, minlen, maxlen)
+def no_digit_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
+    return full_string(True, True, False, True, minlen, maxlen, forbidden_strings)
 
 
 def boolean():
-    return random.random() < 0.5
+    def inner():
+        return random.random() < 0.5
+    return inner
 
 
 def any_type():
-    return random.choice([integer, full_string, boolean])()
+    return random.choice([integer(), full_string(), boolean()])
 
 
 def list_of(generator, minlen: int = 1, maxlen: int = 10):
@@ -71,16 +86,36 @@ def list_of(generator, minlen: int = 1, maxlen: int = 10):
     return inner
 
 
-def dict_of(key_generator, value_generator, minlen: int = 1, maxlen: int = 10):
+def dict_of(
+        key_generator, value_generator, minlen: int = 1,maxlen: int = 10,
+        fixed_values=None
+):
+    if fixed_values is None:
+        fixed_values = {}
     def inner():
         length: int = random.randint(minlen, maxlen)
-        return {key_generator(): value_generator() for _ in range(length)}
+        generated_dict = {key_generator(): value_generator() for _ in range(length)}
+        generated_dict.update(fixed_values)
+        return generated_dict
     return inner
 
 
-def dict_with_fixed_keys(keys, value_generator):
+def dict_with_fixed_keys(keys, value_generator, fixed_values=None):
+    if fixed_values is None:
+        fixed_values = {}
     def inner():
-        return {key: value_generator() for key in keys}
+        generated_dict = {key: value_generator() for key in keys}
+        generated_dict.update(fixed_values)
+        return generated_dict
+    return inner
+
+
+def dict_with_fixed_not_mandatory_keys(keys, value_generator, min_n_keys=0, max_n_keys=10, fixed_values=None):
+    def inner():
+        k: int = random.randint(min_n_keys, min(max_n_keys, len(keys)))
+        subkeys = random.sample(keys, k)
+        return dict_with_fixed_keys(subkeys, value_generator, fixed_values)()
+
     return inner
 
 

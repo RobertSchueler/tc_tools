@@ -9,7 +9,7 @@ class ElementTreeFactory(BaseFactory):
     def build(self, **kwargs) -> ElementTree:
         return super().build(
             [
-                ("rootname", lowercase_string),
+                ("rootname", lowercase_string()),
                 ("children", list_of(ElementFactory().build))
             ],
             **kwargs
@@ -20,6 +20,3 @@ class ElementTreeFactory(BaseFactory):
         for child in children:
             parent.append(child)
         return ElementTree(parent)
-
-
-print(ElementTreeFactory().build())

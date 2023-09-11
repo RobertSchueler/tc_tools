@@ -8,7 +8,7 @@ import unittest
 class TestParseOptionsFile(unittest.TestCase):
     def setUp(self) -> None:
         self.test_file_path = "./testfile.txt"
-        self.inkscape_path = full_string()
+        self.inkscape_path = full_string()()
         self.test_file_content = ConfigurationTextFactory().build(
             inkscape_path=self.inkscape_path
         )

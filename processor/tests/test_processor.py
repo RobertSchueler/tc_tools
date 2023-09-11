@@ -15,9 +15,9 @@ class TestProcessor(unittest.TestCase):
         self.element_tree = ElementTreeFactory().build()
 
     def test_base_process_should_not_throw_errors(self)->None:
-        opt_str = lowercase_string()
-        exc_str = lowercase_string()
-        svg_str = lowercase_string()
+        opt_str = lowercase_string()()
+        exc_str = lowercase_string()()
+        svg_str = lowercase_string()()
         with patch("pandas.read_excel") as pandas_read_excel_mock:
             pandas_read_excel_mock.return_value = self.pandas_dataframe
             with patch("os.system") as os_system_mock:

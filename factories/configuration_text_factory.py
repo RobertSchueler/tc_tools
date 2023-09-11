@@ -6,7 +6,7 @@ class ConfigurationTextFactory(BaseFactory):
     def build(self, **fixed_parameters):
         return super().build(
             [
-                ("inkscape_path", full_string)
+                ("inkscape_path", full_string())
             ],
             **fixed_parameters
         )

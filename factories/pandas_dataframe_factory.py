@@ -18,5 +18,5 @@ class PandasDataframeFactory(BaseFactory):
         return pd.DataFrame(row_data)
 
     def build_pandas_conform_dict(self):
-        length: int = positive_integer()
-        return dict_of(lowercase_string, list_of(any_type, minlen=length, maxlen=length))()
+        length: int = positive_integer()()
+        return dict_of(lowercase_string(), list_of(any_type(), minlen=length, maxlen=length))()
