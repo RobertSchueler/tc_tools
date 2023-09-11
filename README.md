@@ -86,7 +86,7 @@ Here is a diagram, because diagrams are cool:
 Next I will work on allowing to replace an image in the template by another image. First the `SVGRoot` has to be updated to be searchable.
 
 - [x] save inkscape labels when mapping to `SVGRoot`
-- [ ] make `SVGRoot` searchable by inkscape labels
+- [x] make `SVGRoot` searchable by inkscape labels
 - [ ] create an `SVGElement` representing an image with property `href`
 - [ ] map images of the ElementTree to `SVGElement` images
 - [ ] support the mapping of changed `href` properties
