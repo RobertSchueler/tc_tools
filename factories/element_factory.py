@@ -12,14 +12,14 @@ class ElementFactory(BaseFactory):
             fixed_attributes = {}
         return super().build(
             [
-                ("name", lowercase_string()),
+                ("tag", lowercase_string()),
                 ("attrib", self.build_attrib(**fixed_attributes))
             ],
             **fixed_parameter
         )
 
-    def generate(self, name: str, attrib: dict[str, str]):
-        return Element(name, attrib)
+    def generate(self, tag: str, attrib: dict[str, str]):
+        return Element(tag, attrib)
 
     @staticmethod
     def build_attrib(**fixed_attributes):
