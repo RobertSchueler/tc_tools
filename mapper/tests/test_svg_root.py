@@ -8,7 +8,8 @@ from mapper import SVGElement
 
 class TestSVGRoot(unittest.TestCase):
     def setUp(self) -> None:
-        self.labels = list_of(lowercase_string)()
+        self.INCORRECT_LABEL = "incorrect_label"
+        self.labels = list_of(lowercase_string(forbidden_strings=[self.INCORRECT_LABEL]))()
         self.children = [
             SVGElementFactory().build(label=label) for label in self.labels
         ]
@@ -20,4 +21,9 @@ class TestSVGRoot(unittest.TestCase):
         self.assertEqual(fetched_element.get_label(), label_to_fetch)
 
     def test_get_by_label_with_incorrect_label_throws_error(self) -> None:
-        pass
+        with self.assertRaises(KeyError) as error:
+            self.svg_root.get_by_label(self.INCORRECT_LABEL)
+        self.assertEqual(
+            f"'{self.INCORRECT_LABEL}'",
+            str(error.exception)
+        )

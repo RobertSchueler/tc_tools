@@ -1,4 +1,4 @@
-from mapper import SVGElement
+from .svg_element import SVGElement
 
 
 class SVGImage(SVGElement):

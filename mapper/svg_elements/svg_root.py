@@ -14,9 +14,6 @@ class SVGRoot:
         yield from self._children
 
     def get_by_label(self, label: str) -> SVGElement:
-        try:
-            return self._label_to_element_mapping[label]
-        except KeyError as e:
-            raise KeyError(f"No element with label {label} found in SVGRoot", e)
+        return self._label_to_element_mapping[label]
 
 
