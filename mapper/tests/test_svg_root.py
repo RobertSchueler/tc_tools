@@ -1,6 +1,7 @@
 import unittest
 
 from factories import SVGElementFactory
+from factories.svg_collection_factory import SVGCollectionFactory
 from factories.svg_root_factory import SVGRootFactory
 from factories.values import lowercase_string, list_of
 from mapper import SVGElement
@@ -10,8 +11,12 @@ class TestSVGRoot(unittest.TestCase):
     def setUp(self) -> None:
         self.INCORRECT_LABEL = "incorrect_label"
         self.labels = list_of(lowercase_string(forbidden_strings=[self.INCORRECT_LABEL]))()
-        self.children = [
+        self.grandchildren = [
             SVGElementFactory().build(label=label) for label in self.labels
+        ]
+        self.children = [
+            SVGCollectionFactory().build(children=self.grandchildren),
+            SVGElementFactory().build()
         ]
         self.svg_root = SVGRootFactory().build(children=self.children)
 

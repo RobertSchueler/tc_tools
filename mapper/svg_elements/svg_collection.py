@@ -13,3 +13,6 @@ class SVGCollection(SVGElement):
 
     def add_children(self, children: list[SVGElement]):
         self._children.extend(children)
+
+    def get_children(self):
+        return self._children
