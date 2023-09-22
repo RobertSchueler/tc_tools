@@ -91,6 +91,9 @@ Next I will work on allowing to replace an image in the template by another imag
 - [x] map images of the ElementTree to `SVGElement` images
 - [x] support the mapping of changed `href` properties
 - [x] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
+- [ ] create `SVGCollection` for SVG Elements with children
+- [ ] map Elements with children to `SVGCollection` and its children recursively
+- [ ] recursively map Elements back
 - [ ] make manual tests for new behaviour
 - [ ] ~~make a domino example project of domino, where the background the separating image and the images used for the dots can be customized~~ (will do example projects later)
 
