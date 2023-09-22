@@ -95,7 +95,7 @@ Next I will work on allowing to replace an image in the template by another imag
 - [x] map Elements with children to `SVGCollection` and its children recursively
 - [x] recursively map Elements back
 - [x] add support for recursively found label
-- [ ] make manual tests for new behaviour
+- [x] make manual tests for new behaviour
 - [ ] ~~make a domino example project of domino, where the background the separating image and the images used for the dots can be customized~~ (will do example projects later)
 
 In version 0.2.0 we should be able to exchange pictures in our cards making.
