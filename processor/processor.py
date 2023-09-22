@@ -2,7 +2,7 @@ import os
 from typing import Callable
 
 from mapper import extract_svg_root_from_element_tree, SVGRoot, \
-    merge_svg_root_and_element_tree
+    merge_svg_root_and_element_tree, SVGElement, SVGImage
 from persistence import create_simple_data_source_from_excel, parse_svg_to_element_tree, \
     write_element_tree_to_svg, render_svg_to_png, parse_configuration_file
 
@@ -32,4 +32,29 @@ def base_process(
 
 
 def base_process_single_item(svg_root: SVGRoot, data: dict) -> None:
-    pass
+    for key, value in data.items():
+        process_svg_element_by_key(svg_root, key, value)
+
+
+def get_label_and_attribute_from_key(key):
+    if "." not in key:
+        return key, None
+    return key.split(".")[:2]
+
+
+def process_svg_element_by_key(svg_root: SVGRoot, key: str, value: str) -> None:
+    label, attribute = get_label_and_attribute_from_key(key)
+    try:
+        svg_element: SVGElement = svg_root.get_by_label(label)
+    except KeyError:
+        return
+
+    if isinstance(svg_element, SVGImage):
+        process_svg_image_by_attribute(svg_element, attribute, value)
+
+
+def process_svg_image_by_attribute(svg_image: SVGImage, attribute: str | None, value: str):
+    if attribute is None:
+        attribute = "href"
+    if attribute == "href":
+        svg_image.set_href(value)

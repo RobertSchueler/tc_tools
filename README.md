@@ -90,8 +90,9 @@ Next I will work on allowing to replace an image in the template by another imag
 - [x] create an `SVGElement` representing an image with property `href`
 - [x] map images of the ElementTree to `SVGElement` images
 - [x] support the mapping of changed `href` properties
-- [ ] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
-- [ ] make a domino example project of domino, where the background the separating image and the images used for the dots can be customized
+- [x] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
+- [ ] make manual tests for new behaviour
+- [ ] ~~make a domino example project of domino, where the background the separating image and the images used for the dots can be customized~~ (will do example projects later)
 
 In version 0.2.0 we should be able to exchange pictures in our cards making.
 
