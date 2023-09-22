@@ -2,8 +2,8 @@ from processor import base_process, base_process_single_item
 
 """
 Should produce 4 pngs in the './testdata/excel' directory named 'out0.png' up to 'out3.png'.
-Each picture should contain 2 images of the same dalmatiner above each other.
-The dalmatiners in the different pictures should be also different.
+Each picture should contain 2 images of dalmatiner above each other.
+The pictures should be unequal.
 
 Note that you first should change the links in the excel file to fit your local setup.
 """

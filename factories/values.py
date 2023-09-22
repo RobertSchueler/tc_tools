@@ -20,7 +20,8 @@ def full_string(
         allow_punctuation: bool = True,
         minlen: int = 1,
         maxlen: int = 20,
-        forbidden_strings: list[str] = None
+        forbidden_strings: list[str] = None,
+        ending_with: str = ""
 ):
     if forbidden_strings is None:
         forbidden_strings = []
@@ -40,13 +41,16 @@ def full_string(
             candidate: str = "".join([random.choice(ascii_lowercase) for _ in range(length)])
             if candidate in forbidden_strings:
                 continue
-            return candidate
+            return candidate + ending_with
 
     return inner
 
 
-def lowercase_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):
-    return full_string(True, False, False, False, minlen, maxlen, forbidden_strings)
+def lowercase_string(
+        minlen: int = 1, maxlen: int = 20, forbidden_strings: list[str] = None,
+        ending_with: str = ""
+):
+    return full_string(True, False, False, False, minlen, maxlen, forbidden_strings, ending_with)
 
 
 def uppercase_string(minlen: int = 1, maxlen: int = 20, forbidden_strings=None):

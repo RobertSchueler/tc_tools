@@ -3,8 +3,8 @@ import xml.etree.ElementTree as ElementTree
 from . import SVGImage, SVGCollection
 from .svg_elements import SVGRoot, SVGElement
 
-LABEL_KEY: str = "inkscape:label"
-HREF_KEY: str = "xlink:href"
+LABEL_KEY: str = "label"
+HREF_KEY: str = "href"
 
 IMAGE_TAG: str = "image"
 
@@ -44,7 +44,7 @@ def extract_svg_image_from_element(element: ElementTree.Element) -> SVGImage:
     svg_image: SVGImage = SVGImage()
     set_base_values_to_svg_element(element, svg_image)
     for attrib, value in element.attrib.items():
-        if attrib == HREF_KEY:
+        if attrib.endswith(HREF_KEY):
             svg_image.set_href(value)
             break
     return svg_image
@@ -65,14 +65,14 @@ def set_base_values_to_svg_element(
         svg_element: SVGElement
 ) -> None:
     for attrib, value in element.attrib.items():
-        if attrib == LABEL_KEY:
+        if attrib.endswith(LABEL_KEY):
             svg_element.set_label(value)
             break
 
 
 # private
 def element_is_image(element: ElementTree.Element) -> bool:
-    return element.tag == IMAGE_TAG
+    return element.tag.endswith(IMAGE_TAG)
 
 
 def element_is_collection(children: list[ElementTree.Element]) -> bool:

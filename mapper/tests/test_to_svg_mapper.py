@@ -18,8 +18,10 @@ class TestToSVGMapper(unittest.TestCase):
         )
 
         self.href_value = full_string()()
+        self.image_tag = lowercase_string(ending_with=IMAGE_TAG)()
+        self.href_key = lowercase_string(ending_with=HREF_KEY)()
         self.element_with_image_tag = ElementFactory().build(
-            tag=IMAGE_TAG, fixed_attributes={HREF_KEY: self.href_value}
+            tag=self.image_tag, fixed_attributes={self.href_key: self.href_value}
         )
 
         self.grandchildren = list_of(ElementFactory().build)()

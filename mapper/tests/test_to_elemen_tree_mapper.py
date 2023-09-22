@@ -13,7 +13,10 @@ class TestToElementTreeMapper(unittest.TestCase):
         self.etree = ElementTreeFactory().build()
         self.element = ElementFactory().build()
         self.href = lowercase_string()()
-        self.image_element = ElementFactory().build(tag=IMAGE_TAG, fixed_attributes={"href": self.href})
+        self.image_tag = lowercase_string(ending_with=IMAGE_TAG)()
+        self.image_element = ElementFactory().build(
+            tag=self.image_tag, fixed_attributes={"href": self.href}
+        )
         self.svg_element = SVGElementFactory().build()
         self.svg_image = SVGImageFactory().build()
 

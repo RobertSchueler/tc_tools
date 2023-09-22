@@ -1,7 +1,7 @@
 import copy
 from xml.etree.ElementTree import ElementTree, Element
 from mapper import SVGRoot, SVGElement, SVGImage, SVGCollection
-from mapper.to_svg_mapper import IMAGE_TAG
+from .to_svg_mapper import IMAGE_TAG, HREF_KEY
 
 
 def merge_svg_root_and_element_tree(root: SVGRoot, etree: ElementTree) -> ElementTree:
@@ -33,7 +33,10 @@ def merge_svg_collection_and_element(
 
 
 def merge_svg_image_and_element(svg_image: SVGImage, element: Element) -> Element:
-    if element.tag != IMAGE_TAG:
+    if not(element.tag.endswith(IMAGE_TAG)):
         return element
-    element.set("href", svg_image.get_href())
+    extended_attribute = next(
+        (key for key in element.attrib.keys() if key.endswith(HREF_KEY)), "href"
+    )
+    element.set(extended_attribute, svg_image.get_href())
     return element
