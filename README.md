@@ -93,7 +93,8 @@ Next I will work on allowing to replace an image in the template by another imag
 - [x] make controller to identify excel columns of form `<label>.href` and change the `href` property of element with respective inkscape label if it is an image (otherwise throw exception).
 - [x] create `SVGCollection` for SVG Elements with children
 - [x] map Elements with children to `SVGCollection` and its children recursively
-- [ ] recursively map Elements back
+- [x] recursively map Elements back
+- [ ] add support for recursively found label
 - [ ] make manual tests for new behaviour
 - [ ] ~~make a domino example project of domino, where the background the separating image and the images used for the dots can be customized~~ (will do example projects later)
 

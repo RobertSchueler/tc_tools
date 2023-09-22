@@ -1,6 +1,6 @@
 import copy
 from xml.etree.ElementTree import ElementTree, Element
-from mapper import SVGRoot, SVGElement, SVGImage
+from mapper import SVGRoot, SVGElement, SVGImage, SVGCollection
 from mapper.to_svg_mapper import IMAGE_TAG
 
 
@@ -12,9 +12,24 @@ def merge_svg_root_and_element_tree(root: SVGRoot, etree: ElementTree) -> Elemen
 
 
 def merge_svg_and_element(svg_element: SVGElement, element: Element) -> Element:
+    if isinstance(svg_element, SVGCollection):
+        return merge_svg_collection_and_element(svg_element, element)
     if isinstance(svg_element, SVGImage):
         return merge_svg_image_and_element(svg_element, element)
     return element
+
+
+def merge_svg_collection_and_element(
+        svg_collection: SVGCollection, element: Element
+) -> Element:
+    merged_children = [
+        merge_svg_and_element(svg_child_element, child_element)
+        for svg_child_element, child_element in zip(svg_collection, element)
+    ]
+    element.clear()
+    element.extend(merged_children)
+    return element
+
 
 
 def merge_svg_image_and_element(svg_image: SVGImage, element: Element) -> Element:
