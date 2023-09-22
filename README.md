@@ -19,17 +19,30 @@ When you open the GUI you should see something like this:
 
 Then just pick your Excel file, your template SVG and your configuration file and press "Render deck" and it will run :).
 
-The Excel file should contain rowwise information about all your cards, currently it does not really matter what it contains since it is not really processed.
+The Excel file should contain rowwise information about all your cards.
 
 The SVG file should contain a template of how your cards should look like.
+
+The processor then does roughly the following to your template svg for each row of the excel file:
+
+- replaces the path to an image labeled "image_label" by the respective content of the row "image_label" or "image_label.href"
+
+Be careful with your labels, don't let two columns refer to the same object and don't label two objects the same.
 
 The configuration file contains information about your system and your preferences by lines of the form `<parameter>:<value>`.
 The only supported parameter is currently `inkscape_path` which is mandatory to set to the absolute path of your local inkscape installation.
 
-Currently the render process just produces one copy of a png rendering of your template file for each row in your excel file. This will change in the future.
+Currently it is only possible to replace images as you like. More possibilities will come in the future.
 
-Programmers might be interested in running `processor.base_process(options_path, excel_path, svg_path, single_item_process)` with a custom method `single_item_process`.
-It is very simplistic right now, please check the code in order to find out how it works. I will add documentation when it gets more complex.
+## How to customize
+
+You can run `processor.base_process(options_path, excel_path, svg_path, single_item_process)` with a custom method `single_item_process(svg_root: SVGRoot, data: dict) -> None`
+which should manipulate the `svg_root` object based on the data in `data` representing a row of the Excel file.
+The following functions are supported by `tc_tools``:
+- Use `svg_element = svg_root.get_by_label(label) -> SVGElement` to get an `SVGElement` object corresponding to an inkscape object labeled with `label`
+- Use `svg_element.get_label` and `svg_element.set_label` refering to the inkscape labels
+- If `svg_element` is an SVGImage, use `svg_element.get_href` and `svg_element.set_href`
+
 
 ## Technical Details
 The project has the following dependencies (with the version used in development, others probably also work)
@@ -81,9 +94,27 @@ Here is a diagram, because diagrams are cool:
 - in the directory `manual_tests` there are additional non-automatic tests. These require a suitable local setup with inkscape up and running. You can check [this](manual_tests/README.md) out for more information.
 - the GUI is not automatically tested but just checked manually
 
-## Plan going forward (to version 0.2.0)
+## Plan going forward (to version 0.3.0)
 
-Next I will work on allowing to replace an image in the template by another image. First the `SVGRoot` has to be updated to be searchable.
+Next I will work on allowing to replace text contents with custom text.
+
+- [ ] Create `SVGText` representing Texts on `SVGElement` level
+- [ ] Map inkscape text objects to `SVGText`
+- [ ] Map `SVGText` back
+- [ ] Let processor map columns linked to text objects replace the text content
+- [ ] Create manual tests for that
+
+## Milestones for version 1.0.0
+
+- Support for Text, Image, Rectangle, Groups
+- Text content can be changed
+- Image can be switched
+- SVG root can be searched for elements by label, text content
+- Elements can be repositioned, resized, rotated and reflected
+- Font-family, font-size and font-weight can be changed
+- Example Projects: Domino and Skat
+
+## Progress resulting in version 0.2.0
 
 - [x] save inkscape labels when mapping to `SVGRoot`
 - [x] make `SVGRoot` searchable by inkscape labels
@@ -98,17 +129,7 @@ Next I will work on allowing to replace an image in the template by another imag
 - [x] make manual tests for new behaviour
 - [ ] ~~make a domino example project of domino, where the background the separating image and the images used for the dots can be customized~~ (will do example projects later)
 
-In version 0.2.0 we should be able to exchange pictures in our cards making.
-
-## Milestones for version 1.0.0
-
-- Support for Text, Image, Rectangle, Groups
-- Text content can be changed
-- Image can be switched
-- SVG root can be searched for elements by label, text content
-- Elements can be repositioned, resized, rotated and reflected
-- Font-family, font-size and font-weight can be changed
-- Example Projects: Domino and Skat
+In version 0.2.0 you are able to exchange pictures in our cards making.
 
 ## Progress resulting in version 0.1.0
 
@@ -137,8 +158,8 @@ The resulting version is relatively useless since it only produces copies of the
 - command line interface
 
 ## Technical Wishlist
-- command line interface
 - pipeline
 - PiPy publishing
 - add a single executable to published versions
 - overhaul package structure to be more pythonic
+- manual tests should be half automatic
