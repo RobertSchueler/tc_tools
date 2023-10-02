@@ -61,6 +61,34 @@ class ManualTestcases(TestCase):
             ".\\testdata\\results\\test_002\\out3.png"
         )
 
+    def test_testcase_003_should_have_different_images_and_titles(self) -> None:
+        excel_path = ".\\testdata\\excel\\testmappe_003.xlsx"
+        svg_path = ".\\testdata\\svg\\testdata_003.svg"
+
+        base_process(
+            configurations_path=self.configurations_path,
+            excel_path=excel_path,
+            svg_path=svg_path,
+            single_item_process=base_process_single_item
+        )
+
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out0.png",
+            ".\\testdata\\results\\test_003\\out0.png"
+        )
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out1.png",
+            ".\\testdata\\results\\test_003\\out1.png"
+        )
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out2.png",
+            ".\\testdata\\results\\test_003\\out2.png"
+        )
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out3.png",
+            ".\\testdata\\results\\test_003\\out3.png"
+        )
+
     def tearDown(self) -> None:
         self.clean_remove(".\\testdata\\excel\\out0.png")
         self.clean_remove(".\\testdata\\excel\\out1.png")
