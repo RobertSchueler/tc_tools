@@ -2,11 +2,12 @@ import os
 from typing import Callable
 
 from mapper import extract_svg_root_from_element_tree, SVGRoot, \
-    merge_svg_root_and_element_tree, SVGElement, SVGImage
+    merge_svg_root_and_element_tree, SVGElement, SVGImage, SVGText
 from persistence import create_simple_data_source_from_excel, parse_svg_to_element_tree, \
     write_element_tree_to_svg, render_svg_to_png, parse_configuration_file
 
 
+# public
 def base_process(
         configurations_path: str,
         excel_path: str,
@@ -31,6 +32,7 @@ def base_process(
     os.remove("./temp.svg")
 
 
+#public
 def base_process_single_item(svg_root: SVGRoot, data: dict) -> None:
     for key, value in data.items():
         process_svg_element_by_key(svg_root, key, value)
@@ -51,6 +53,8 @@ def process_svg_element_by_key(svg_root: SVGRoot, key: str, value: str) -> None:
 
     if isinstance(svg_element, SVGImage):
         process_svg_image_by_attribute(svg_element, attribute, value)
+    elif isinstance(svg_element, SVGText):
+        process_svg_text_by_attribute(svg_element, attribute, value)
 
 
 def process_svg_image_by_attribute(svg_image: SVGImage, attribute: str | None, value: str):
@@ -58,3 +62,10 @@ def process_svg_image_by_attribute(svg_image: SVGImage, attribute: str | None, v
         attribute = "href"
     if attribute == "href":
         svg_image.set_href(value)
+
+
+def process_svg_text_by_attribute(svg_text: SVGText, attribute: str | None, value: str):
+    if attribute is None:
+        attribute = "text"
+    if attribute == "text":
+        svg_text.set_text_content(value)

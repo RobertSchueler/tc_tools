@@ -4,7 +4,8 @@ from unittest.mock import patch
 from factories import PandasDataframeFactory, ElementTreeFactory, values
 from factories.svg_image_factory import SVGImageFactory
 from factories.svg_root_factory import SVGRootFactory
-from factories.values import lowercase_string, dict_with_fixed_keys
+from factories.svg_text_factory import SVGTextFactory
+from factories.values import lowercase_string, dict_with_fixed_keys, full_string
 from processor import base_process, base_process_single_item
 
 import persistence
@@ -51,3 +52,29 @@ class TestProcessor(unittest.TestCase):
         base_process_single_item(self.svg_root_with_image, self.data_for_image_without_href)
 
         self.assertEqual(self.href, self.svg_image.get_href())
+
+    def test_base_process_single_item_should_process_texts_correctly(self):
+        label = lowercase_string()()
+        svg_text = SVGTextFactory().build(label=label)
+        svg_root_with_text = SVGRootFactory().build(children=[svg_text])
+
+        text_content = full_string()()
+
+        data_for_text_with_text_content = {f"{label}.text": text_content}
+
+        base_process_single_item(svg_root_with_text, data_for_text_with_text_content)
+
+        self.assertEqual(text_content, svg_text.get_text_content())
+
+    def test_base_process_single_item_should_process_texts_correctly_when_no_attribute_is_given(self):
+        label = lowercase_string()()
+        svg_text = SVGTextFactory().build(label=label)
+        svg_root_with_text = SVGRootFactory().build(children=[svg_text])
+
+        text_content = full_string()()
+
+        data_for_text_with_text_content = {f"{label}": text_content}
+
+        base_process_single_item(svg_root_with_text, data_for_text_with_text_content)
+
+        self.assertEqual(text_content, svg_text.get_text_content())

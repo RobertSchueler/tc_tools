@@ -101,8 +101,8 @@ Next I will work on allowing to replace text contents with custom text.
 
 - [x] Create `SVGText` representing Texts on `SVGElement` level
 - [x] Map inkscape text objects to `SVGText`
-- [ ] Map `SVGText` back
-- [ ] Let processor map columns linked to text objects replace the text content
+- [x] Map `SVGText` back
+- [x] Let processor map columns linked to text objects replace the text content
 - [ ] Create manual tests for that
 
 ## Milestones for version 1.0.0
