@@ -6,7 +6,7 @@ from factories.values import lowercase_string, full_string, list_of
 from mapper import extract_svg_root_from_element_tree, SVGRoot, SVGElement, SVGImage, \
     SVGCollection, SVGText
 from mapper.to_svg_mapper import LABEL_KEY, extract_svg_element_from_element, IMAGE_TAG, \
-    HREF_KEY
+    HREF_KEY, TEXT_TAG
 
 
 class TestToSVGMapper(unittest.TestCase):
@@ -32,12 +32,15 @@ class TestToSVGMapper(unittest.TestCase):
             inkscape_label
         )
 
-    def test_extract_svg_element_from_element_should_extract_href_from_images(self) -> None:
+    def test_extract_svg_element_from_element_should_extract_attributes_from_images(self) -> None:
         href_value = full_string()()
         image_tag = lowercase_string(ending_with=IMAGE_TAG)()
-        href_key = lowercase_string(ending_with=HREF_KEY)()
+        label = lowercase_string()()
         element_with_image_tag = ElementFactory().build(
-            tag=image_tag, fixed_attributes={href_key: href_value}
+            tag=image_tag, fixed_attributes={
+                LABEL_KEY: label,
+                HREF_KEY: href_value
+            }
         )
 
         generated_svg_image = extract_svg_element_from_element(
@@ -50,13 +53,22 @@ class TestToSVGMapper(unittest.TestCase):
             return
 
         self.assertEqual(
+            label,
+            generated_svg_image.get_label()
+        )
+
+        self.assertEqual(
             href_value,
             generated_svg_image.get_href()
         )
 
     def test_extract_svg_element_from_element_tree_should_work_recursively(self) -> None:
+        label = lowercase_string()()
         grandchildren = list_of(ElementFactory().build)()
         child_element_with_children = ElementFactory().build_with_children(
+            fixed_attributes={
+                LABEL_KEY: label
+            },
             children=grandchildren
         )
         child_element_without_children = ElementFactory().build()
@@ -72,11 +84,13 @@ class TestToSVGMapper(unittest.TestCase):
         grandchildren = [grandchild for grandchild in children[0]]
 
         self.assertEqual(children[0].__class__, SVGCollection)
+        self.assertEqual(children[0].get_label(), label)
         self.assertEqual(children[1].__class__, SVGElement)
         self.assertEqual(len(grandchildren), len(grandchildren))
 
     def test_extract_svg_element_from_element_should_extract_text_content_from_text(self) -> None:
         tag = lowercase_string(ending_with="text")()
+        label = lowercase_string()()
         root_content = full_string()()
         text_contents = list_of(full_string())()
         children = [
@@ -85,6 +99,9 @@ class TestToSVGMapper(unittest.TestCase):
         ]
         text_element = ElementFactory().build(
             tag=tag,
+            fixed_attributes={
+                LABEL_KEY: label
+            },
             children=children,
             text_content=root_content
         )
@@ -96,6 +113,8 @@ class TestToSVGMapper(unittest.TestCase):
             # to make type safety happy
             return
 
+        self.assertEqual(generated_svg_text.get_label(), label)
+
         expected_text_content = root_content
         for child_content in text_contents:
             expected_text_content += child_content
@@ -104,7 +123,8 @@ class TestToSVGMapper(unittest.TestCase):
 
     def test_extract_svg_element_from_element_should_extract_empty_strings_from_non_set_text(
             self) -> None:
-        tag = lowercase_string(ending_with="text")()
+        tag = lowercase_string(ending_with=TEXT_TAG)()
+        label = lowercase_string()()
         text_contents = list_of(lambda: None)()
         children = [
             ElementFactory().build(text_content=text_content)
@@ -112,6 +132,9 @@ class TestToSVGMapper(unittest.TestCase):
         ]
         text_element = ElementFactory().build(
             tag=tag,
+            fixed_attributes={
+                LABEL_KEY: label
+            },
             children=children,
             text_content=None
         )

@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
 
-from mapper.to_svg_mapper import LABEL_KEY
+from mapper.to_svg_mapper import LABEL_KEY, HREF_KEY
 from .base_factory import BaseFactory
 from .values import lowercase_string, dict_with_fixed_not_mandatory_keys, list_of, \
     full_string
@@ -50,8 +50,15 @@ class ElementFactory(BaseFactory):
     def build_attrib(**fixed_attributes):
         def inner():
             candidate = dict_with_fixed_not_mandatory_keys(
-                [LABEL_KEY], lowercase_string()
+                [
+                    LABEL_KEY, HREF_KEY
+                ],
+                lowercase_string()
             )()
             candidate.update(fixed_attributes)
+            candidate = {
+                lowercase_string(ending_with=key)(): value
+                for key, value in candidate.items()
+            }
             return candidate
         return inner

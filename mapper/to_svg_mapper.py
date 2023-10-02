@@ -26,7 +26,7 @@ def extract_svg_element_from_element(element: ElementTree.Element) -> SVGElement
         return extract_svg_text_from_element(element, children)
 
     if element_is_collection(children):
-        return extract_svg_collection_from_element(children)
+        return extract_svg_collection_from_element(element, children)
 
     if element_is_image(element):
         return extract_svg_image_from_element(element)
@@ -40,6 +40,7 @@ def get_children_of_element(element: ElementTree.Element) -> list[ElementTree.El
 
 def extract_svg_text_from_element(element: ElementTree.Element, children: list[ElementTree.Element]) -> SVGText:
     svg_text = SVGText()
+    set_base_values_to_svg_element(element, svg_text)
     text_content = extract_text_from_element(element) + "".join(
         [extract_text_from_element(child) for child in children]
     )
@@ -53,8 +54,11 @@ def extract_text_from_element(element: ElementTree.Element) -> str:
         return ""
     return element.text
 
-def extract_svg_collection_from_element(children: list[ElementTree.Element]) -> SVGCollection:
+
+def extract_svg_collection_from_element(element: ElementTree.Element, children: list[ElementTree.Element]) -> SVGCollection:
     svg_collection = SVGCollection()
+    set_base_values_to_svg_element(element, svg_collection)
+
     svg_children = [extract_svg_element_from_element(child) for child in children]
     svg_collection.add_children(svg_children)
 

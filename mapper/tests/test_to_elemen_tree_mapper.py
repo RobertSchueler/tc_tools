@@ -43,7 +43,6 @@ class TestToElementTreeMapper(unittest.TestCase):
             children=self.element_children
         )
 
-
     def test_merge_svg_root_and_element_tree_should_throw_no_errors(self) -> None:
         original_svg_root = SVGRoot([])
         merge_svg_root_and_element_tree(original_svg_root, self.etree)
