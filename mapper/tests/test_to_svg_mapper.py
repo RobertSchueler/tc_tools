@@ -4,9 +4,9 @@ from xml.etree.ElementTree import Element, ElementTree
 from factories import ElementTreeFactory, ElementFactory
 from factories.values import lowercase_string, full_string, list_of
 from mapper import extract_svg_root_from_element_tree, SVGRoot, SVGElement, SVGImage, \
-    SVGCollection
+    SVGCollection, SVGText
 from mapper.to_svg_mapper import LABEL_KEY, extract_svg_element_from_element, IMAGE_TAG, \
-    HREF_KEY, extract_svg_image_from_element
+    HREF_KEY
 
 
 class TestToSVGMapper(unittest.TestCase):
@@ -52,9 +52,15 @@ class TestToSVGMapper(unittest.TestCase):
         )
 
     def test_extract_svg_element_from_element_should_extract_href_from_images(self) -> None:
-        generated_svg_image: SVGImage = extract_svg_image_from_element(
+        generated_svg_image = extract_svg_element_from_element(
             self.element_with_image_tag
         )
+
+        self.assertEqual(generated_svg_image.__class__, SVGImage)
+        if not isinstance(generated_svg_image, SVGImage):
+            # to make type safety happy
+            return
+
         self.assertEqual(
             self.href_value,
             generated_svg_image.get_href()
@@ -68,3 +74,32 @@ class TestToSVGMapper(unittest.TestCase):
         self.assertEqual(children[0].__class__, SVGCollection)
         self.assertEqual(children[1].__class__, SVGElement)
         self.assertEqual(len(grandchildren), len(self.grandchildren))
+
+
+    def test_extract_svg_element_from_element_should_extract_text_content_from_text(self) -> None:
+        tag = lowercase_string(ending_with="text")()
+        root_content = full_string()()
+        text_contents = list_of(full_string())()
+        children = [
+            ElementFactory().build(text_content=text_content)
+            for text_content in text_contents
+        ]
+        text_element = ElementFactory().build(
+            tag=tag,
+            children=children,
+            text_content=root_content
+        )
+
+        generated_svg_text = extract_svg_element_from_element(text_element)
+
+        self.assertEqual(generated_svg_text.__class__, SVGText)
+        if not isinstance(generated_svg_text, SVGText):
+            # to make type safety happy
+            return
+
+        expected_text_content = root_content
+        for child_content in text_contents:
+            expected_text_content += child_content
+
+        self.assertEqual(generated_svg_text.get_text_content(), expected_text_content)
+

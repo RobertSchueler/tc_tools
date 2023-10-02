@@ -2,7 +2,8 @@ from xml.etree.ElementTree import Element
 
 from mapper.to_svg_mapper import LABEL_KEY
 from .base_factory import BaseFactory
-from .values import lowercase_string, dict_with_fixed_not_mandatory_keys, list_of
+from .values import lowercase_string, dict_with_fixed_not_mandatory_keys, list_of, \
+    full_string
 
 
 class ElementFactory(BaseFactory):
@@ -14,6 +15,7 @@ class ElementFactory(BaseFactory):
             [
                 ("tag", lowercase_string()),
                 ("attrib", self.build_attrib(**fixed_attributes)),
+                ("text_content", full_string()),
                 ("children", list_of(ElementFactory().build, minlen=0, maxlen=0))
             ],
             **fixed_parameter
@@ -26,14 +28,22 @@ class ElementFactory(BaseFactory):
             [
                 ("tag", lowercase_string()),
                 ("attrib", self.build_attrib(**fixed_attributes)),
+                ("text_content", full_string()),
                 ("children", list_of(ElementFactory().build))
             ],
             **fixed_parameter
         )
 
-    def generate(self, tag: str, attrib: dict[str, str], children: list[Element]):
+    def generate(
+            self,
+            tag: str,
+            attrib: dict[str, str],
+            text_content: str,
+            children: list[Element]
+    ):
         element = Element(tag, attrib)
         element.extend(children)
+        element.text = text_content
         return element
 
     @staticmethod
