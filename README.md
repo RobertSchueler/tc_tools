@@ -99,7 +99,7 @@ Here is a diagram, because diagrams are cool:
 
 Next I will work on allowing to replace text contents with custom text.
 
-- [ ] Create `SVGText` representing Texts on `SVGElement` level
+- [x] Create `SVGText` representing Texts on `SVGElement` level
 - [ ] Map inkscape text objects to `SVGText`
 - [ ] Map `SVGText` back
 - [ ] Let processor map columns linked to text objects replace the text content
