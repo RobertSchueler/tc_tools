@@ -1,9 +1,10 @@
 import copy
 from xml.etree.ElementTree import ElementTree, Element
-from mapper import SVGRoot, SVGElement, SVGImage, SVGCollection
+from mapper import SVGRoot, SVGElement, SVGImage, SVGCollection, SVGText
 from .to_svg_mapper import IMAGE_TAG, HREF_KEY
 
 
+# public
 def merge_svg_root_and_element_tree(root: SVGRoot, etree: ElementTree) -> ElementTree:
     copied_etree = copy.deepcopy(etree)
     for svg_child, etree_child in zip(root, copied_etree.getroot()):
@@ -11,11 +12,24 @@ def merge_svg_root_and_element_tree(root: SVGRoot, etree: ElementTree) -> Elemen
     return copied_etree
 
 
+# public
 def merge_svg_and_element(svg_element: SVGElement, element: Element) -> Element:
     if isinstance(svg_element, SVGCollection):
         return merge_svg_collection_and_element(svg_element, element)
     if isinstance(svg_element, SVGImage):
         return merge_svg_image_and_element(svg_element, element)
+    if isinstance(svg_element, SVGText):
+        return merge_svg_text_and_element(svg_element, element)
+    return element
+
+
+def merge_svg_text_and_element(svg_text: SVGText, element: Element) -> Element:
+    #kill all children because text in inkscape is saved via weird tspans
+    for child in element:
+        del child
+
+    element.text = svg_text.get_text_content()
+
     return element
 
 
@@ -29,7 +43,6 @@ def merge_svg_collection_and_element(
     element.clear()
     element.extend(merged_children)
     return element
-
 
 
 def merge_svg_image_and_element(svg_image: SVGImage, element: Element) -> Element:

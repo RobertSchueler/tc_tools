@@ -3,9 +3,10 @@ import unittest
 from factories import ElementTreeFactory, ElementFactory, SVGElementFactory
 from factories.svg_collection_factory import SVGCollectionFactory
 from factories.svg_image_factory import SVGImageFactory
+from factories.svg_text_factory import SVGTextFactory
 from factories.values import lowercase_string, list_of
 from mapper import merge_svg_root_and_element_tree, SVGRoot, merge_svg_and_element
-from mapper.to_svg_mapper import IMAGE_TAG
+from mapper.to_svg_mapper import IMAGE_TAG, TEXT_TAG
 
 
 class TestToElementTreeMapper(unittest.TestCase):
@@ -64,3 +65,14 @@ class TestToElementTreeMapper(unittest.TestCase):
         ]
 
         self.assertEqual(len(merged_element_grandchildren), len(self.grandchildren))
+
+
+    def test_merge_svg_and_element_should_merge_svg_text_and_texts(self) -> None:
+        element_to_merge = ElementFactory().build()
+        svg_text_to_merge = SVGTextFactory().build()
+
+        merged_element = merge_svg_and_element(svg_text_to_merge, element_to_merge)
+
+        self.assertEqual(merged_element.text, svg_text_to_merge.get_text_content())
+
+
