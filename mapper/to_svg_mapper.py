@@ -40,11 +40,18 @@ def get_children_of_element(element: ElementTree.Element) -> list[ElementTree.El
 
 def extract_svg_text_from_element(element: ElementTree.Element, children: list[ElementTree.Element]) -> SVGText:
     svg_text = SVGText()
-    text_content = element.text + "".join([child.text for child in children])
+    text_content = extract_text_from_element(element) + "".join(
+        [extract_text_from_element(child) for child in children]
+    )
     svg_text.set_text_content(text_content)
 
     return svg_text
 
+
+def extract_text_from_element(element: ElementTree.Element) -> str:
+    if element.text is None:
+        return ""
+    return element.text
 
 def extract_svg_collection_from_element(children: list[ElementTree.Element]) -> SVGCollection:
     svg_collection = SVGCollection()

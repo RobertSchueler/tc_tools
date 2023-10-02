@@ -75,7 +75,6 @@ class TestToSVGMapper(unittest.TestCase):
         self.assertEqual(children[1].__class__, SVGElement)
         self.assertEqual(len(grandchildren), len(self.grandchildren))
 
-
     def test_extract_svg_element_from_element_should_extract_text_content_from_text(self) -> None:
         tag = lowercase_string(ending_with="text")()
         root_content = full_string()()
@@ -102,4 +101,30 @@ class TestToSVGMapper(unittest.TestCase):
             expected_text_content += child_content
 
         self.assertEqual(generated_svg_text.get_text_content(), expected_text_content)
+
+    def test_extract_svg_element_from_element_should_extract_empty_strings_from_non_set_text(
+            self) -> None:
+        tag = lowercase_string(ending_with="text")()
+        text_contents = list_of(lambda: None)()
+        children = [
+            ElementFactory().build(text_content=text_content)
+            for text_content in text_contents
+        ]
+        text_element = ElementFactory().build(
+            tag=tag,
+            children=children,
+            text_content=None
+        )
+
+        generated_svg_text = extract_svg_element_from_element(text_element)
+
+        self.assertEqual(generated_svg_text.__class__, SVGText)
+        if not isinstance(generated_svg_text, SVGText):
+            # to make type safety happy
+            return
+
+        expected_text_content = ""
+
+        self.assertEqual(generated_svg_text.get_text_content(),
+                         expected_text_content)
 
