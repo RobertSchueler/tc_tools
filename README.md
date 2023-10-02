@@ -25,7 +25,8 @@ The SVG file should contain a template of how your cards should look like.
 
 The processor then does roughly the following to your template svg for each row of the excel file:
 
-- replaces the path to an image labeled "image_label" by the respective content of the row "image_label" or "image_label.href"
+- replaces the path to an image labeled "image_label" by the respective content of the column named "image_label" or "image_label.href" (since 0.2.0)
+- replaces the text content of a text element labeled "text_label" by the respective content of the column named "text_label" or "text_label.text" (since 0.3.0)
 
 Be careful with your labels, don't let two columns refer to the same object and don't label two objects the same.
 
@@ -39,9 +40,10 @@ Currently it is only possible to replace images as you like. More possibilities 
 You can run `processor.base_process(options_path, excel_path, svg_path, single_item_process)` with a custom method `single_item_process(svg_root: SVGRoot, data: dict) -> None`
 which should manipulate the `svg_root` object based on the data in `data` representing a row of the Excel file.
 The following functions are supported by `tc_tools``:
-- Use `svg_element = svg_root.get_by_label(label) -> SVGElement` to get an `SVGElement` object corresponding to an inkscape object labeled with `label`
-- Use `svg_element.get_label` and `svg_element.set_label` refering to the inkscape labels
-- If `svg_element` is an SVGImage, use `svg_element.get_href` and `svg_element.set_href`
+- Use `svg_element = svg_root.get_by_label(label) -> SVGElement` to get an `SVGElement` object corresponding to an inkscape object labeled with `label` (since 0.2.0)
+- Use `svg_element.get_label` and `svg_element.set_label` refering to the inkscape labels (since 0.2.0)
+- If `svg_element` is an `SVGImage`, use `svg_element.get_href` and `svg_element.set_href` (since 0.2.0)
+- If `svg_element` is an `SVGText`, use `svg_element.get_text_content` and `svg_element.set_text_content` (since 0.3.0)
 
 
 ## Technical Details
@@ -95,16 +97,6 @@ Here is a diagram, because diagrams are cool:
 - in the directory `manual_tests` there are additional non-automatic tests. These require a suitable local setup with inkscape up and running. You can check [this](manual_tests/README.md) out for more information.
 - the GUI is not automatically tested but just checked manually
 
-## Plan going forward (to version 0.3.0)
-
-Next I will work on allowing to replace text contents with custom text.
-
-- [x] Create `SVGText` representing Texts on `SVGElement` level
-- [x] Map inkscape text objects to `SVGText`
-- [x] Map `SVGText` back
-- [x] Let processor map columns linked to text objects replace the text content
-- [x] Create manual tests for that
-
 ## Milestones for version 1.0.0
 
 - Support for Text, Image, Rectangle, Groups
@@ -114,6 +106,26 @@ Next I will work on allowing to replace text contents with custom text.
 - Elements can be repositioned, resized, rotated and reflected
 - Font-family, font-size and font-weight can be changed
 - Example Projects: Domino and Skat
+
+## Plan going forward (to version 0.4.0)
+
+Next I will work on a whole bunch of geometric operations
+
+- [ ] Create and map position attributes
+- [ ] Create and map scaling attributes
+- [ ] Create and map rotation attributes
+- [ ] Create and map reflection attributes
+- [ ] Add manual test for geometric operations
+
+## Progress resulting in version 0.3.0
+
+- [x] Create `SVGText` representing Texts on `SVGElement` level
+- [x] Map inkscape text objects to `SVGText`
+- [x] Map `SVGText` back
+- [x] Let processor map columns linked to text objects replace the text content
+- [x] Create manual tests for that
+
+In version 0.3.0 you are able to replace the text of your cards
 
 ## Progress resulting in version 0.2.0
 
@@ -130,7 +142,7 @@ Next I will work on allowing to replace text contents with custom text.
 - [x] make manual tests for new behaviour
 - [ ] ~~make a domino example project of domino, where the background the separating image and the images used for the dots can be customized~~ (will do example projects later)
 
-In version 0.2.0 you are able to exchange pictures in our cards making.
+In version 0.2.0 you are able to exchange pictures in your card making.
 
 ## Progress resulting in version 0.1.0
 
