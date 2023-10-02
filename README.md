@@ -48,6 +48,7 @@ The following functions are supported by `tc_tools``:
 The project has the following dependencies (with the version used in development, others probably also work)
 - `pandas 2.0.3` (for excel reading)
 - `PySimpleGUI 4.60.5` (for GUI)
+- `matplotlib 3.8.0` (for image comparison when testing)
 
 For different components of an SVG, there should be different custom SVG objects yielding the same structure.
 
@@ -162,4 +163,3 @@ The resulting version is relatively useless since it only produces copies of the
 - PiPy publishing
 - add a single executable to published versions
 - overhaul package structure to be more pythonic
-- manual tests should be half automatic
