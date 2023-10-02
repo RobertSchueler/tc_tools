@@ -26,7 +26,7 @@ def merge_svg_and_element(svg_element: SVGElement, element: Element) -> Element:
 def merge_svg_text_and_element(svg_text: SVGText, element: Element) -> Element:
     #kill all children because text in inkscape is saved via weird tspans
     for child in element:
-        del child
+        element.remove(child)
 
     element.text = svg_text.get_text_content()
 
