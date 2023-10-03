@@ -6,7 +6,7 @@ from factories.svg_image_factory import SVGImageFactory
 from factories.svg_text_factory import SVGTextFactory
 from factories.values import lowercase_string, list_of
 from mapper import merge_svg_root_and_element_tree, SVGRoot, merge_svg_and_element
-from mapper.to_svg_mapper import IMAGE_TAG, TEXT_TAG
+from mapper.to_svg_mapper import IMAGE_TAG, TEXT_TAG, HREF_KEY
 
 
 class TestToElementTreeMapper(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestToElementTreeMapper(unittest.TestCase):
         self.href = lowercase_string()()
         self.image_tag = lowercase_string(ending_with=IMAGE_TAG)()
         self.image_element = ElementFactory().build(
-            tag=self.image_tag, fixed_attributes={"href": self.href}
+            tag=self.image_tag, fixed_attributes={HREF_KEY: self.href}
         )
         self.svg_element = SVGElementFactory().build()
         self.svg_image = SVGImageFactory().build()
@@ -52,7 +52,8 @@ class TestToElementTreeMapper(unittest.TestCase):
 
     def test_merge_svg_and_element_should_merge_svg_images_and_images(self) -> None:
         merged_element = merge_svg_and_element(self.svg_image, self.image_element)
-        self.assertEqual(merged_element.get("href"), self.svg_image.get_href())
+        href_key = [key for key in self.image_element.attrib.keys() if key.endswith(HREF_KEY)][0]
+        self.assertEqual(merged_element.get(href_key), self.svg_image.get_href())
 
     def test_merge_svg_and_element_should_recursively_merge(self) -> None:
         merged_element = merge_svg_and_element(
