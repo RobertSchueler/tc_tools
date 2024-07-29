@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-from processor import base_process, base_process_single_item
+from tc_tools.processor import base_process, base_process_single_item
 
 LABEL_SIZE = (10, 1)
 INPUT_FIELD_SIZE = (45, 1)

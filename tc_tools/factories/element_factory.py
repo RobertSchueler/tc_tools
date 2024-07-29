@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
 
-from mapper.to_svg_mapper import LABEL_KEY, HREF_KEY
+from tc_tools.mapper.to_svg_mapper import LABEL_KEY, HREF_KEY
 from .base_factory import BaseFactory
 from .values import lowercase_string, dict_with_fixed_not_mandatory_keys, list_of, \
     full_string

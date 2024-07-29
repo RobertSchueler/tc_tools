@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, Mock
 import xml.etree.ElementTree as ElementTree
 
-from persistence import parse_svg_to_element_tree, write_element_tree_to_svg, render_svg_to_png
+from tc_tools.persistence import parse_svg_to_element_tree, write_element_tree_to_svg, render_svg_to_png
 
 
 class TestSVGMethods(unittest.TestCase):

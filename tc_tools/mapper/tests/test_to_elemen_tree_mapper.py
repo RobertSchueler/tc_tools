@@ -1,12 +1,13 @@
 import unittest
 
-from factories import ElementTreeFactory, ElementFactory, SVGElementFactory
-from factories.svg_collection_factory import SVGCollectionFactory
-from factories.svg_image_factory import SVGImageFactory
-from factories.svg_text_factory import SVGTextFactory
-from factories.values import lowercase_string, list_of
-from mapper import merge_svg_root_and_element_tree, SVGRoot, merge_svg_and_element
-from mapper.to_svg_mapper import IMAGE_TAG, TEXT_TAG, HREF_KEY
+from tc_tools.factories import ElementTreeFactory, ElementFactory, SVGElementFactory
+from tc_tools.factories.svg_collection_factory import SVGCollectionFactory
+from tc_tools.factories.svg_image_factory import SVGImageFactory
+from tc_tools.factories.svg_text_factory import SVGTextFactory
+from tc_tools.factories.values import lowercase_string, list_of
+from tc_tools.mapper import merge_svg_root_and_element_tree, SVGRoot, \
+    merge_svg_and_element
+from tc_tools.mapper.to_svg_mapper import IMAGE_TAG, HREF_KEY
 
 
 class TestToElementTreeMapper(unittest.TestCase):

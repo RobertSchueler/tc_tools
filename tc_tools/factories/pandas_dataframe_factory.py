@@ -1,7 +1,7 @@
 import pandas as pd
 
-from factories.base_factory import BaseFactory
-from factories.values import dict_of, lowercase_string, list_of, any_type, integer, \
+from tc_tools.factories.base_factory import BaseFactory
+from tc_tools.factories.values import dict_of, lowercase_string, list_of, any_type, integer, \
     positive_integer
 
 

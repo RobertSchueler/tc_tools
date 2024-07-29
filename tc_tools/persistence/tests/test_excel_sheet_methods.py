@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch
 
-from factories import PandasDataframeFactory
-from persistence import create_simple_data_source_from_excel
+from tc_tools.factories import PandasDataframeFactory
+from tc_tools.persistence import create_simple_data_source_from_excel
 
 
 class TestExcelSheetMethods(unittest.TestCase):

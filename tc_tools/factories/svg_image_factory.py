@@ -1,4 +1,4 @@
-from mapper import SVGImage
+from tc_tools.mapper import SVGImage
 from .base_factory import BaseFactory
 from .values import lowercase_string
 

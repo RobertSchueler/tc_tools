@@ -1,4 +1,4 @@
-from mapper import SVGElement, SVGRoot
+from tc_tools.mapper import SVGElement, SVGRoot
 from . import SVGElementFactory
 from .base_factory import BaseFactory
 from .values import list_of

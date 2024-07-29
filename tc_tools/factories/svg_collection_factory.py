@@ -1,7 +1,7 @@
 from . import SVGElementFactory
 from .base_factory import BaseFactory
 from .values import lowercase_string, list_of
-from mapper import SVGCollection, SVGElement
+from tc_tools.mapper import SVGCollection, SVGElement
 
 
 class SVGCollectionFactory(BaseFactory):

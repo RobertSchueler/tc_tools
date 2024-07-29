@@ -1,15 +1,12 @@
 import unittest
 from unittest.mock import patch
 
-from factories import PandasDataframeFactory, ElementTreeFactory, values
-from factories.svg_image_factory import SVGImageFactory
-from factories.svg_root_factory import SVGRootFactory
-from factories.svg_text_factory import SVGTextFactory
-from factories.values import lowercase_string, dict_with_fixed_keys, full_string
-from processor import base_process, base_process_single_item
-
-import persistence
-import os
+from tc_tools.factories import PandasDataframeFactory, ElementTreeFactory
+from tc_tools.factories.svg_image_factory import SVGImageFactory
+from tc_tools.factories.svg_root_factory import SVGRootFactory
+from tc_tools.factories.svg_text_factory import SVGTextFactory
+from tc_tools.factories.values import lowercase_string, full_string
+from tc_tools.processor import base_process, base_process_single_item
 
 
 class TestProcessor(unittest.TestCase):
@@ -25,7 +22,7 @@ class TestProcessor(unittest.TestCase):
             with patch("os.system") as os_system_mock:
                 with patch("xml.etree.ElementTree.parse") as etree_parse_mock:
                     etree_parse_mock.return_value = element_tree
-                    with patch("processor.processor.parse_configuration_file") as parse_configurations_file_mock:
+                    with patch("tc_tools.processor.processor.parse_configuration_file") as parse_configurations_file_mock:
                         base_process(opt_str, exc_str, svg_str, base_process_single_item)
 
         parse_configurations_file_mock.assert_called_once_with(opt_str)

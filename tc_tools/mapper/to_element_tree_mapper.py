@@ -1,6 +1,6 @@
 import copy
 from xml.etree.ElementTree import ElementTree, Element
-from mapper import SVGRoot, SVGElement, SVGImage, SVGCollection, SVGText
+from tc_tools.mapper import SVGRoot, SVGElement, SVGImage, SVGCollection, SVGText
 from .to_svg_mapper import IMAGE_TAG, HREF_KEY
 
 

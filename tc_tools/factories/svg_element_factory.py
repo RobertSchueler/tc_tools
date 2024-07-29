@@ -1,5 +1,5 @@
 from .base_factory import BaseFactory
-from mapper import SVGElement
+from tc_tools.mapper import SVGElement
 from .values import lowercase_string
 
 

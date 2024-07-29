@@ -1,10 +1,10 @@
 import unittest
 
-from factories import SVGElementFactory
-from factories.svg_collection_factory import SVGCollectionFactory
-from factories.svg_root_factory import SVGRootFactory
-from factories.values import lowercase_string, list_of
-from mapper import SVGElement
+from tc_tools.factories import SVGElementFactory
+from tc_tools.factories.svg_collection_factory import SVGCollectionFactory
+from tc_tools.factories.svg_root_factory import SVGRootFactory
+from tc_tools.factories.values import lowercase_string, list_of
+from tc_tools.mapper import SVGElement
 
 
 class TestSVGRoot(unittest.TestCase):

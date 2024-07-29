@@ -1,6 +1,6 @@
-from factories import ConfigurationTextFactory
-from factories.values import full_string
-from persistence import parse_configuration_file
+from tc_tools.factories import ConfigurationTextFactory
+from tc_tools.factories.values import full_string
+from tc_tools.persistence import parse_configuration_file
 import os
 import unittest
 

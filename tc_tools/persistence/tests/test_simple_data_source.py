@@ -1,7 +1,7 @@
 import unittest
 
-from factories.values import any_type, lowercase_string, dict_of, list_of
-from persistence import SimpleDataSource
+from tc_tools.factories.values import any_type, lowercase_string, dict_of, list_of
+from tc_tools.persistence import SimpleDataSource
 
 
 class TestSimpleDataSource(unittest.TestCase):

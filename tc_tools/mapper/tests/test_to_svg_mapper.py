@@ -1,11 +1,11 @@
 import unittest
 from xml.etree.ElementTree import Element, ElementTree
 
-from factories import ElementTreeFactory, ElementFactory
-from factories.values import lowercase_string, full_string, list_of
-from mapper import extract_svg_root_from_element_tree, SVGRoot, SVGElement, SVGImage, \
+from tc_tools.factories import ElementTreeFactory, ElementFactory
+from tc_tools.factories.values import lowercase_string, full_string, list_of
+from tc_tools.mapper import extract_svg_root_from_element_tree, SVGRoot, SVGElement, SVGImage, \
     SVGCollection, SVGText
-from mapper.to_svg_mapper import LABEL_KEY, extract_svg_element_from_element, IMAGE_TAG, \
+from tc_tools.mapper.to_svg_mapper import LABEL_KEY, extract_svg_element_from_element, IMAGE_TAG, \
     HREF_KEY, TEXT_TAG
 
 

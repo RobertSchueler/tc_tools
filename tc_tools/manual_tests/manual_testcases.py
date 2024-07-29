@@ -1,4 +1,4 @@
-from processor import base_process, base_process_single_item
+from tc_tools.processor import base_process, base_process_single_item
 from unittest import TestCase
 import os
 from matplotlib.testing.compare import compare_images
