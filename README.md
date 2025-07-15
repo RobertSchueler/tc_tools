@@ -27,6 +27,7 @@ The processor then does roughly the following to your template svg for each row 
 
 - replaces the path to an image labeled "image_label" by the respective content of the column named "image_label" or "image_label.href" (since 0.2.0)
 - replaces the text content of a text element labeled "text_label" by the respective content of the column named "text_label" or "text_label.text" (since 0.3.0)
+- line breaks are supported
 
 Be careful with your labels, don't let two columns refer to the same object and don't label two objects the same.
 
@@ -74,20 +75,6 @@ Here is a diagram, because diagrams are cool:
 
 ![module_diagram](https://github.com/RobertSchueler/tc_tools/assets/70914876/67716ef5-c975-4497-8be9-843749c0d05b)
 
-## Git/Merging strategie
-
-- the main branch is a version branch and therefore only updated when a new version is released
-- hot fixes will be commited to the main branch directly
-- the future branch contains the current WIP state of the next bigger version
-- If you want to contribute you can create a PR to the future branch that realizes one of the points of the next section
-- I want a linear git history, so everything should be rebased before a fast forward merge is performed
-- The versioning will be according to standard practices
-  - changes to README.md and other supplementary files do not result in a version change
-  - hot fixes lead to a increase of the last version number, e.g. 0.0.0 -> 0.0.1
-  - the merge of the future branch into main will result in an increase of the second version number, e.g. 0.0.99 -> 0.1.0
-  - If all milestones are reached, the first version number is increased, e.g. 0.99.99 -> 1.0.0. Note that all deprecated features are removed in such a major change, so versions with a different first version number might not be compatible
-- I want to refine the application feature by feature in a kind-of agile process (every in-between version should be running)
-
 ## Other design decision
 
 - tests of behaviour for all methods (created while implementing)
@@ -107,7 +94,7 @@ Here is a diagram, because diagrams are cool:
 - Font-family, font-size and font-weight can be changed
 - Example Projects: Domino and Skat
 
-## Plan going forward (to version 0.4.0)
+## Plan going forward (to version 0.5.0)
 
 Next I will work on a whole bunch of geometric operations
 
@@ -116,6 +103,12 @@ Next I will work on a whole bunch of geometric operations
 - [ ] Create and map rotation attributes
 - [ ] Create and map reflection attributes
 - [ ] Add manual test for geometric operations
+
+## Plan going forward (to version 0.4.0)
+- [ ] Display version number on UI
+- [ ] Support usage of embedded images instead of linked images
+- [ ] Support absolute paths and relative paths with the excel file as root for images
+- [x] Support multiline text
 
 ## Progress resulting in version 0.3.0
 
