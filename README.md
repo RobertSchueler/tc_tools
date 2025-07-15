@@ -94,9 +94,9 @@ Here is a diagram, because diagrams are cool:
 - Font-family, font-size and font-weight can be changed
 - Example Projects: Domino and Skat
 
-## Plan going forward (to version 0.5.0)
+## Plan going forward
 
-Next I will work on a whole bunch of geometric operations
+Once I planned to work on a whole bunch of geometric operations
 
 - [ ] Create and map position attributes
 - [ ] Create and map scaling attributes
@@ -104,10 +104,12 @@ Next I will work on a whole bunch of geometric operations
 - [ ] Create and map reflection attributes
 - [ ] Add manual test for geometric operations
 
-## Plan going forward (to version 0.4.0)
-- [ ] Display version number on UI
+## Plan going forward
+- [ ] Save default project for GUI
+- [ ] Save/Load projects in GUI
 - [ ] Support usage of embedded images instead of linked images
 - [ ] Support absolute paths and relative paths with the excel file as root for images
+- [ ] Display version number on GUI
 - [x] Support multiline text
 
 ## Progress resulting in version 0.3.0
