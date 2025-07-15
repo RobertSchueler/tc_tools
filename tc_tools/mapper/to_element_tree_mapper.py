@@ -1,5 +1,6 @@
 import copy
-from xml.etree.ElementTree import ElementTree, Element
+from random import random
+from xml.etree.ElementTree import ElementTree, Element, SubElement
 from tc_tools.mapper import SVGRoot, SVGElement, SVGImage, SVGCollection, SVGText
 from .to_svg_mapper import IMAGE_TAG, HREF_KEY
 
@@ -25,10 +26,20 @@ def merge_svg_and_element(svg_element: SVGElement, element: Element) -> Element:
 
 def merge_svg_text_and_element(svg_text: SVGText, element: Element) -> Element:
     #kill all children because text in inkscape is saved via weird tspans
-    for child in element:
+    for child in list(element):
         element.remove(child)
 
-    element.text = svg_text.get_text_content()
+    element.text = ""
+
+    for line in svg_text.get_text_content().split("\n"):
+        subelement = SubElement(element, "ns0:tspan", attrib={
+            "ns2:role": "line",
+            "style": "stroke-width:0.264583",
+            "x": str(element.attrib.get("x")),
+            "y": str(element.attrib.get("y")),
+            "id": str("tspan" + str(int(random() * 100000))),
+        })
+        subelement.text = line
 
     return element
 

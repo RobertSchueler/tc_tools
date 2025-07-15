@@ -74,6 +74,19 @@ class TestToElementTreeMapper(unittest.TestCase):
 
         merged_element = merge_svg_and_element(svg_text_to_merge, element_to_merge)
 
-        self.assertEqual(merged_element.text, svg_text_to_merge.get_text_content())
+        self.assertEqual(merged_element.text, "")
+        self.assertEqual(merged_element[0].text, svg_text_to_merge.get_text_content())
+
+    def test_merge_svg_and_element_should_merge_svg_text_and_multiline_texts(self) -> None:
+        element_to_merge = ElementFactory().build()
+        svg_text_to_merge = SVGTextFactory().build(text_content = "First line\nSecond line\nThird line")
+
+        merged_element = merge_svg_and_element(svg_text_to_merge, element_to_merge)
+
+        self.assertEqual(merged_element.text, "")
+        self.assertEqual(3, len(merged_element))
+        self.assertEqual(merged_element[0].text, "First line")
+        self.assertEqual(merged_element[1].text, "Second line")
+        self.assertEqual(merged_element[2].text, "Third line")
 
 
