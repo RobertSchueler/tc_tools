@@ -5,7 +5,7 @@ from tc_tools.factories import PandasDataframeFactory, ElementTreeFactory
 from tc_tools.factories.svg_image_factory import SVGImageFactory
 from tc_tools.factories.svg_root_factory import SVGRootFactory
 from tc_tools.factories.svg_text_factory import SVGTextFactory
-from tc_tools.factories.values import lowercase_string, full_string
+from tc_tools.factories.values import lowercase_string, full_string, integer
 from tc_tools.processor import base_process, base_process_single_item
 
 
@@ -82,3 +82,16 @@ class TestProcessor(unittest.TestCase):
         base_process_single_item(svg_root_with_text, data_for_text_with_text_content)
 
         self.assertEqual(text_content, svg_text.get_text_content())
+
+    def test_base_process_single_item_should_process_numeric_values_correctly(self):
+        label = lowercase_string()()
+        svg_text = SVGTextFactory().build(label=label)
+        svg_root_with_text = SVGRootFactory().build(children=[svg_text])
+
+        numeric_value = integer()()
+
+        data_for_text_with_numeric_content = {f"{label}": numeric_value}
+
+        base_process_single_item(svg_root_with_text, data_for_text_with_numeric_content)
+
+        self.assertEqual(str(numeric_value), svg_text.get_text_content())

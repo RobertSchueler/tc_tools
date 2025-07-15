@@ -39,7 +39,7 @@ def base_process(
 #public
 def base_process_single_item(svg_root: SVGRoot, data: dict) -> None:
     for key, value in data.items():
-        process_svg_element_by_key(svg_root, key, value)
+        process_svg_element_by_key(svg_root, key, str(value))
 
 
 def get_label_and_attribute_from_key(key):
