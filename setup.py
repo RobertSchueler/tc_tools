@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tc_tools',
-    version='0.4.0',
+    version='0.6.0',
     description='Simple trading card generation',
     url='https://github.com/RobertSchueler/tc_tools',
     author='Robert Schüler',

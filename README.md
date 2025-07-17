@@ -26,8 +26,9 @@ The SVG file should contain a template of how your cards should look like.
 The processor then does roughly the following to your template svg for each row of the excel file:
 
 - replaces the path to an image labeled "image_label" by the respective content of the column named "image_label" or "image_label.href" (since 0.2.0)
+- the replaced image will have its original aspect ratio and will be aligned in the center of the template image (since 0.6.0)
 - replaces the text content of a text element labeled "text_label" by the respective content of the column named "text_label" or "text_label.text" (since 0.3.0)
-- line breaks are supported
+- line breaks are supported (since 0.4.0)
 
 Be careful with your labels, don't let two columns refer to the same object and don't label two objects the same.
 
@@ -109,7 +110,8 @@ Once I planned to work on a whole bunch of geometric operations
 - [ ] Save/Load projects in GUI
 - [ ] Support usage of embedded images instead of linked images
 - [ ] Support absolute paths and relative paths with the excel file as root for images
-- [ ] Display version number on GUI
+- [x] center images
+- [x] Display version number on GUI
 - [x] Support multiline text
 
 ## Progress resulting in version 0.3.0

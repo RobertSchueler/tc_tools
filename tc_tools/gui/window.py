@@ -8,7 +8,7 @@ INPUT_FIELD_SIZE = (45, 1)
 
 def run_gui():
     window = sg.Window(
-        title="TC Tools Graphical user interface version 0.5.0",
+        title="TC Tools Graphical user interface version 0.6.0",
         layout=[
             [
                 sg.Text('Excel', size=LABEL_SIZE),
