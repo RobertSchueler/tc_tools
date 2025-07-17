@@ -117,6 +117,34 @@ class ManualTestcases(TestCase):
             ".\\testdata\\results\\test_004\\out3.png"
         )
 
+    def test_testcase_005_should_center_image_with_original_proportions(self) -> None:
+        excel_path = ".\\testdata\\excel\\testmappe_005.xlsx"
+        svg_path = ".\\testdata\\svg\\testdata_005.svg"
+
+        base_process(
+            configurations_path=self.configurations_path,
+            excel_path=excel_path,
+            svg_path=svg_path,
+            single_item_process=base_process_single_item
+        )
+
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out0.png",
+            ".\\testdata\\results\\test_005\\out0.png"
+        )
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out1.png",
+            ".\\testdata\\results\\test_005\\out1.png"
+        )
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out2.png",
+            ".\\testdata\\results\\test_005\\out2.png"
+        )
+        self.assertImagesEqual(
+            ".\\testdata\\excel\\out3.png",
+            ".\\testdata\\results\\test_005\\out3.png"
+        )
+
     def tearDown(self) -> None:
         pass
         self.clean_remove(".\\testdata\\excel\\out0.png")
