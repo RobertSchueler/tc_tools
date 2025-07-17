@@ -4,7 +4,6 @@ from . import SVGImage, SVGCollection
 from .svg_elements import SVGRoot, SVGElement, SVGText
 
 LABEL_KEY: str = "label"
-HREF_KEY: str = "href"
 
 IMAGE_TAG: str = "image"
 TEXT_TAG: str = "text"
@@ -69,9 +68,21 @@ def extract_svg_image_from_element(element: ElementTree.Element) -> SVGImage:
     svg_image: SVGImage = SVGImage()
     set_base_values_to_svg_element(element, svg_image)
     for attrib, value in element.attrib.items():
-        if attrib.endswith(HREF_KEY):
-            svg_image.set_href(value)
-            break
+        if attrib.endswith("href"):
+            svg_image.href = value
+            continue
+        if attrib.endswith("x"):
+            svg_image.outer_x = float(value)
+            continue
+        if attrib.endswith("y"):
+            svg_image.outer_y = float(value)
+            continue
+        if attrib.endswith("width"):
+            svg_image.outer_width = float(value)
+            continue
+        if attrib.endswith("height"):
+            svg_image.outer_height = float(value)
+            continue
     return svg_image
 
 

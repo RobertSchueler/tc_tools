@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
 
-from tc_tools.mapper.to_svg_mapper import LABEL_KEY, HREF_KEY
+from tc_tools.mapper.to_svg_mapper import LABEL_KEY
 from .base_factory import BaseFactory
 from .values import lowercase_string, dict_with_fixed_not_mandatory_keys, list_of, \
     full_string
@@ -51,7 +51,7 @@ class ElementFactory(BaseFactory):
         def inner():
             candidate = dict_with_fixed_not_mandatory_keys(
                 [
-                    LABEL_KEY, HREF_KEY
+                    LABEL_KEY, "href"
                 ],
                 lowercase_string()
             )()

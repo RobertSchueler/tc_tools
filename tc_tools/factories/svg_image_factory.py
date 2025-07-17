@@ -16,5 +16,5 @@ class SVGImageFactory(BaseFactory):
     def generate(self, label: str, href: str) -> SVGImage:
         element: SVGImage = SVGImage()
         element.set_label(label)
-        element.set_href(href)
+        element.href = href
         return element

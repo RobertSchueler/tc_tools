@@ -2,7 +2,7 @@ import copy
 from random import random
 from xml.etree.ElementTree import ElementTree, Element, SubElement
 from tc_tools.mapper import SVGRoot, SVGElement, SVGImage, SVGCollection, SVGText
-from .to_svg_mapper import IMAGE_TAG, HREF_KEY
+from .to_svg_mapper import IMAGE_TAG
 
 
 # public
@@ -60,7 +60,7 @@ def merge_svg_image_and_element(svg_image: SVGImage, element: Element) -> Elemen
     if not(element.tag.endswith(IMAGE_TAG)):
         return element
     extended_attribute = next(
-        (key for key in element.attrib.keys() if key.endswith(HREF_KEY)), "href"
+        (key for key in element.attrib.keys() if key.endswith("href")), "href"
     )
     element.set(extended_attribute, svg_image.get_href())
     return element

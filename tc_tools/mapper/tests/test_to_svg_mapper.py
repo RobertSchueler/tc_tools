@@ -2,11 +2,11 @@ import unittest
 from xml.etree.ElementTree import Element, ElementTree
 
 from tc_tools.factories import ElementTreeFactory, ElementFactory
-from tc_tools.factories.values import lowercase_string, full_string, list_of
+from tc_tools.factories.values import lowercase_string, full_string, list_of, floating
 from tc_tools.mapper import extract_svg_root_from_element_tree, SVGRoot, SVGElement, SVGImage, \
     SVGCollection, SVGText
 from tc_tools.mapper.to_svg_mapper import LABEL_KEY, extract_svg_element_from_element, IMAGE_TAG, \
-    HREF_KEY, TEXT_TAG
+    TEXT_TAG
 
 
 class TestToSVGMapper(unittest.TestCase):
@@ -34,12 +34,21 @@ class TestToSVGMapper(unittest.TestCase):
 
     def test_extract_svg_element_from_element_should_extract_attributes_from_images(self) -> None:
         href_value = full_string()()
+        x_value = floating()()
+        y_value = floating()()
+        width_value = floating()()
+        height_value = floating()()
+
         image_tag = lowercase_string(ending_with=IMAGE_TAG)()
         label = lowercase_string()()
         element_with_image_tag = ElementFactory().build(
             tag=image_tag, fixed_attributes={
                 LABEL_KEY: label,
-                HREF_KEY: href_value
+                "href": href_value,
+                "x": x_value,
+                "y": y_value,
+                "width": width_value,
+                "height": height_value
             }
         )
 
@@ -52,15 +61,12 @@ class TestToSVGMapper(unittest.TestCase):
             # to make type safety happy
             return
 
-        self.assertEqual(
-            label,
-            generated_svg_image.get_label()
-        )
-
-        self.assertEqual(
-            href_value,
-            generated_svg_image.get_href()
-        )
+        self.assertEqual(label,generated_svg_image.get_label())
+        self.assertEqual(href_value,generated_svg_image.href)
+        self.assertEqual(x_value, generated_svg_image.outer_x)
+        self.assertEqual(y_value, generated_svg_image.outer_y)
+        self.assertEqual(width_value, generated_svg_image.outer_width)
+        self.assertEqual(height_value, generated_svg_image.outer_height)
 
     def test_extract_svg_element_from_element_tree_should_work_recursively(self) -> None:
         label = lowercase_string()()

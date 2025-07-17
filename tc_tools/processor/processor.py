@@ -1,17 +1,12 @@
 import os
 from typing import Callable
-
-
-
-
-# public
 from tc_tools.mapper import extract_svg_root_from_element_tree, SVGRoot, \
     merge_svg_root_and_element_tree, SVGElement, SVGImage, SVGText
 from tc_tools.persistence import parse_configuration_file, \
     create_simple_data_source_from_excel, parse_svg_to_element_tree, \
     write_element_tree_to_svg, render_svg_to_png
 
-
+#public
 def base_process(
         configurations_path: str,
         excel_path: str,
@@ -65,7 +60,7 @@ def process_svg_image_by_attribute(svg_image: SVGImage, attribute: str | None, v
     if attribute is None:
         attribute = "href"
     if attribute == "href":
-        svg_image.set_href(value)
+        svg_image.href = value
 
 
 def process_svg_text_by_attribute(svg_text: SVGText, attribute: str | None, value: str):

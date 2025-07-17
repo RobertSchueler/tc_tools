@@ -9,6 +9,13 @@ def integer(min_size=-100, max_size=100):
     return inner
 
 
+def floating(min=-100, max=100):
+    def inner():
+        return random.random()*(max - min) - min
+
+    return inner
+
+
 def positive_integer(min_size=0, max_size=100):
     return integer(min_size, max_size)
 

@@ -43,7 +43,7 @@ which should manipulate the `svg_root` object based on the data in `data` repres
 The following functions are supported by `tc_tools``:
 - Use `svg_element = svg_root.get_by_label(label) -> SVGElement` to get an `SVGElement` object corresponding to an inkscape object labeled with `label` (since 0.2.0)
 - Use `svg_element.get_label` and `svg_element.set_label` refering to the inkscape labels (since 0.2.0)
-- If `svg_element` is an `SVGImage`, use `svg_element.get_href` and `svg_element.set_href` (since 0.2.0)
+- If `svg_element` is an `SVGImage`, use `svg_element.href`
 - If `svg_element` is an `SVGText`, use `svg_element.get_text_content` and `svg_element.set_text_content` (since 0.3.0)
 
 
