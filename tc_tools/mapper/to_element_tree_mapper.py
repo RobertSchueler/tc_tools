@@ -1,6 +1,9 @@
 import copy
 from random import random
 from xml.etree.ElementTree import ElementTree, Element, SubElement
+
+import imagesize
+
 from tc_tools.mapper import SVGRoot, SVGElement, SVGImage, SVGCollection, SVGText
 from .to_svg_mapper import IMAGE_TAG
 
@@ -59,8 +62,24 @@ def merge_svg_collection_and_element(
 def merge_svg_image_and_element(svg_image: SVGImage, element: Element) -> Element:
     if not(element.tag.endswith(IMAGE_TAG)):
         return element
-    extended_attribute = next(
-        (key for key in element.attrib.keys() if key.endswith("href")), "href"
-    )
-    element.set(extended_attribute, svg_image.get_href())
+
+    override_element_attribute(element, "href", svg_image.href)
+
+    image_width, image_height = imagesize.get(svg_image.href)
+    scale = min(svg_image.outer_width/image_width, svg_image.outer_height/image_height)
+    width_border_size = svg_image.outer_width - scale*image_width
+    heigth_border_size = svg_image.outer_height - scale*image_height
+
+    override_element_attribute(element, "x", svg_image.outer_x + 1/2*width_border_size)
+    override_element_attribute(element, "y", svg_image.outer_y + 1/2*heigth_border_size)
+    override_element_attribute(element, "width", scale*image_width)
+    override_element_attribute(element, "height", scale*image_height)
+
     return element
+
+
+def override_element_attribute(element: Element, override_key: str, value: str):
+    extended_attribute = next(
+        (key for key in element.attrib.keys() if key.endswith(override_key)), override_key
+    )
+    element.set(extended_attribute, str(value))

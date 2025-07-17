@@ -1,14 +1,16 @@
 import unittest
+from unittest.mock import patch
+from xml.etree.ElementTree import Element
 
 from tc_tools.factories import ElementTreeFactory, ElementFactory, SVGElementFactory
 from tc_tools.factories.svg_collection_factory import SVGCollectionFactory
 from tc_tools.factories.svg_image_factory import SVGImageFactory
 from tc_tools.factories.svg_text_factory import SVGTextFactory
-from tc_tools.factories.values import lowercase_string, list_of
+from tc_tools.factories.values import lowercase_string, list_of, integer, \
+    positive_integer
 from tc_tools.mapper import merge_svg_root_and_element_tree, SVGRoot, \
-    merge_svg_and_element
-from tc_tools.mapper.to_svg_mapper import IMAGE_TAG, HREF_KEY
-
+    merge_svg_and_element, SVGImage
+from tc_tools.mapper.to_svg_mapper import IMAGE_TAG
 
 class TestToElementTreeMapper(unittest.TestCase):
     def setUp(self) -> None:
@@ -17,7 +19,7 @@ class TestToElementTreeMapper(unittest.TestCase):
         self.href = lowercase_string()()
         self.image_tag = lowercase_string(ending_with=IMAGE_TAG)()
         self.image_element = ElementFactory().build(
-            tag=self.image_tag, fixed_attributes={HREF_KEY: self.href}
+            tag=self.image_tag, fixed_attributes={"href": self.href}
         )
         self.svg_element = SVGElementFactory().build()
         self.svg_image = SVGImageFactory().build()
@@ -52,9 +54,35 @@ class TestToElementTreeMapper(unittest.TestCase):
         merge_svg_and_element(self.svg_element, self.element)
 
     def test_merge_svg_and_element_should_merge_svg_images_and_images(self) -> None:
-        merged_element = merge_svg_and_element(self.svg_image, self.image_element)
-        href_key = [key for key in self.image_element.attrib.keys() if key.endswith(HREF_KEY)][0]
-        self.assertEqual(merged_element.get(href_key), self.svg_image.get_href())
+        image_width = positive_integer()()
+        image_height = positive_integer()()
+        with patch("imagesize.get") as imagesize_patch:
+            imagesize_patch.return_value = (image_width, image_height)
+            merged_element = merge_svg_and_element(self.svg_image, self.image_element)
+        href = get_attribute_from_element(merged_element, "href")
+        self.assertEqual(href, self.svg_image.href)
+
+        new_x = float(get_attribute_from_element(merged_element, "x"))
+        new_y = float(get_attribute_from_element(merged_element, "y"))
+        new_width = float(get_attribute_from_element(merged_element, "width"))
+        new_height = float(get_attribute_from_element(merged_element, "height"))
+
+        old_x = float(get_attribute_from_element(self.image_element, "x"))
+        old_y = float(get_attribute_from_element(self.image_element, "y"))
+        old_width = float(get_attribute_from_element(self.image_element, "width"))
+        old_height = float(get_attribute_from_element(self.image_element, "height"))
+
+        # check that new image in in the center
+        self.assertEqual(new_x - old_x, new_width - old_width)
+        self.assertEqual(new_y - old_y, new_height - old_height)
+        # check that new image is inside old image
+        self.assertGreaterEqual(new_x, old_x)
+        self.assertGreaterEqual(new_y, old_y)
+        self.assertLessEqual(new_width, old_width)
+        self.assertLessEqual(new_height, old_height)
+
+        # check that new image is maximally scaled
+        self.assertTrue(old_width - new_width < 0.01 or old_height - new_height < 0.01)
 
     def test_merge_svg_and_element_should_recursively_merge(self) -> None:
         merged_element = merge_svg_and_element(
@@ -90,3 +118,6 @@ class TestToElementTreeMapper(unittest.TestCase):
         self.assertEqual(merged_element[2].text, "Third line")
 
 
+def get_attribute_from_element(element: Element, param) -> str:
+    attrib_key = [key for key in element.attrib.keys() if key.endswith(param)][0]
+    return element.attrib.get(attrib_key)
